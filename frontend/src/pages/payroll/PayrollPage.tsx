@@ -45,8 +45,8 @@ export const PayrollPage = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <DollarSign color="var(--primary)" size={34} /> Payroll & Compensation
+          <h1 style={{ margin: 0, fontSize: '2.3rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)' }}>
+            <DollarSign color="var(--primary)" size={36} /> Payroll & Compensation
           </h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Manage salary breakdowns, allowances, deductions, net payouts, and monthly payslips.
@@ -61,13 +61,13 @@ export const PayrollPage = () => {
 
       {/* Payslip Card Highlight */}
       {latestPayslip && (
-        <div className="glass-panel-glow" style={{ padding: '1.5rem 2rem' }}>
+        <div className="glass-panel-glow" style={{ padding: '1.6rem 2rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <div style={{ color: 'var(--primary)', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <div style={{ color: 'var(--accent-mint)', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Latest Statement · {latestPayslip.period || `${selectedMonth}/${selectedYear}`}
               </div>
-              <h2 style={{ margin: '0.2rem 0 0 0', fontSize: '1.5rem', fontWeight: 800 }}>
+              <h2 style={{ margin: '0.2rem 0 0 0', fontSize: '1.6rem', fontWeight: 900 }}>
                 {latestPayslip.employee_name || 'Employee Salary Statement'}
               </h2>
             </div>
@@ -76,22 +76,22 @@ export const PayrollPage = () => {
             </button>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.25rem', background: 'rgba(0,0,0,0.3)', padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1.25rem', background: 'rgba(0,0,0,0.4)', padding: '1.35rem', borderRadius: '0.8rem', border: '1px solid var(--border-subtle)' }}>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Basic Salary</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 700 }}>₹{latestPayslip.basic_salary?.toLocaleString()}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.825rem' }}>Basic Salary</div>
+              <div style={{ fontSize: '1.35rem', fontWeight: 800 }}>₹{latestPayslip.basic_salary?.toLocaleString()}</div>
             </div>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>HRA + Allowances</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-cyan)' }}>₹{(latestPayslip.hra + latestPayslip.other_allowances)?.toLocaleString()}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.825rem' }}>HRA + Allowances</div>
+              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--accent-cyan)' }}>₹{(latestPayslip.hra + latestPayslip.other_allowances)?.toLocaleString()}</div>
             </div>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Deductions (PF + Tax)</div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-rose)' }}>-₹{(latestPayslip.pf_deduction + latestPayslip.tax_deduction)?.toLocaleString()}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.825rem' }}>Deductions (PF + Tax)</div>
+              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--accent-rose)' }}>-₹{(latestPayslip.pf_deduction + latestPayslip.tax_deduction)?.toLocaleString()}</div>
             </div>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Net Salary Disbursed</div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary)' }}>₹{latestPayslip.net_salary?.toLocaleString()}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.825rem' }}>Net Salary Disbursed</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent-mint)' }}>₹{latestPayslip.net_salary?.toLocaleString()}</div>
             </div>
           </div>
         </div>
@@ -100,18 +100,18 @@ export const PayrollPage = () => {
       {/* Metrics Row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
         {[
-          { label: 'Total Payroll Budget', value: `₹${totalGross.toLocaleString()}`, icon: DollarSign, color: 'var(--accent-indigo)' },
-          { label: 'Total Net Disbursed', value: `₹${totalNet.toLocaleString()}`, icon: CheckCircle2, color: 'var(--primary)' },
-          { label: 'Processed Payslips', value: records.length, icon: FileSpreadsheet, color: 'var(--accent-cyan)' },
-          { label: 'Status', value: 'Verified', icon: ShieldCheck, color: 'var(--accent-amber)' },
+          { label: 'Total Payroll Budget', value: `₹${totalGross.toLocaleString()}`, icon: DollarSign, color: 'var(--accent-magenta)', bg: 'rgba(217,70,239,0.15)' },
+          { label: 'Total Net Disbursed', value: `₹${totalNet.toLocaleString()}`, icon: CheckCircle2, color: 'var(--primary)', bg: 'rgba(16,185,129,0.15)' },
+          { label: 'Processed Payslips', value: records.length, icon: FileSpreadsheet, color: 'var(--accent-cyan)', bg: 'rgba(6,182,212,0.15)' },
+          { label: 'Status', value: 'Verified', icon: ShieldCheck, color: 'var(--accent-amber)', bg: 'rgba(245,158,11,0.15)' },
         ].map((m, i) => (
-          <div key={i} className="glass-panel" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div key={i} className="glass-panel" style={{ padding: '1.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem' }}>{m.label}</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800 }}>{m.value}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>{m.label}</div>
+              <div style={{ fontSize: '1.6rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>{m.value}</div>
             </div>
-            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.75rem', borderRadius: '0.75rem', color: m.color }}>
-              <m.icon size={22} />
+            <div style={{ background: m.bg, padding: '0.85rem', borderRadius: '0.8rem', color: m.color }}>
+              <m.icon size={24} />
             </div>
           </div>
         ))}
@@ -119,8 +119,8 @@ export const PayrollPage = () => {
 
       {/* Payroll Table */}
       <div className="glass-panel" style={{ overflow: 'hidden' }}>
-        <div style={{ padding: '1.25rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-subtle)', flexWrap: 'wrap', gap: '1rem' }}>
-          <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800 }}>Monthly Payroll Breakdown</h3>
+        <div style={{ padding: '1.35rem 1.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-subtle)', flexWrap: 'wrap', gap: '1rem' }}>
+          <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800 }}>Monthly Payroll Breakdown</h3>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <select className="input-field" style={{ width: 'auto' }} value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m) => (
@@ -134,28 +134,28 @@ export const PayrollPage = () => {
           </div>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.925rem' }}>
           <thead>
-            <tr style={{ background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
-              <th style={{ padding: '1rem 1.25rem' }}>Employee</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Basic</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Allowances</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Deductions</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Gross Salary</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Net Salary</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Status</th>
+            <tr style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Employee</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Basic</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Allowances</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Deductions</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Gross Salary</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Net Salary</th>
+              <th style={{ padding: '1.1rem 1.35rem' }}>Status</th>
             </tr>
           </thead>
           <tbody>
             {records.map((r: any) => (
               <tr key={r.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                <td style={{ padding: '1rem 1.25rem', fontWeight: 700 }}>{r.employee_name || 'Ravi Sharma'}</td>
-                <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)' }}>₹{r.basic_salary?.toLocaleString()}</td>
-                <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>₹{(r.hra + r.other_allowances)?.toLocaleString()}</td>
-                <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-rose)' }}>-₹{(r.pf_deduction + r.tax_deduction)?.toLocaleString()}</td>
-                <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)' }}>₹{r.gross_salary?.toLocaleString()}</td>
-                <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--primary)' }}>₹{r.net_salary?.toLocaleString()}</td>
-                <td style={{ padding: '1rem 1.25rem' }}>
+                <td style={{ padding: '1.1rem 1.35rem', fontWeight: 700 }}>{r.employee_name || 'Ravi Sharma'}</td>
+                <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)' }}>₹{r.basic_salary?.toLocaleString()}</td>
+                <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-cyan)' }}>₹{(r.hra + r.other_allowances)?.toLocaleString()}</td>
+                <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-rose)' }}>-₹{(r.pf_deduction + r.tax_deduction)?.toLocaleString()}</td>
+                <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)' }}>₹{r.gross_salary?.toLocaleString()}</td>
+                <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)', fontWeight: 900, color: 'var(--accent-mint)' }}>₹{r.net_salary?.toLocaleString()}</td>
+                <td style={{ padding: '1.1rem 1.35rem' }}>
                   <span className="badge badge-success">{r.status}</span>
                 </td>
               </tr>

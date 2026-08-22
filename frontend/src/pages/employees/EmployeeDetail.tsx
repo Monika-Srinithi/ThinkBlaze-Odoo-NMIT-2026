@@ -50,15 +50,15 @@ export const EmployeeDetail = () => {
 
       {/* Header Profile Card */}
       <div className="glass-panel-glow" style={{ padding: '2rem', display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', fontWeight: 800, color: 'white' }}>
+        <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg, #10b981, #047857)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', fontWeight: 900, color: 'white' }}>
           {emp.first_name?.[0]}{emp.last_name?.[0]}
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 800 }}>{emp.full_name}</h1>
+            <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>{emp.full_name}</h1>
             <span className={`badge ${badgeClass}`}>{emp.status}</span>
           </div>
-          <div style={{ color: 'var(--accent-cyan)', fontWeight: 600, fontSize: '1rem', marginTop: '0.2rem' }}>
+          <div style={{ color: 'var(--accent-mint)', fontWeight: 700, fontSize: '1rem', marginTop: '0.2rem' }}>
             {emp.designation} · {emp.department}
           </div>
           <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.35rem', fontFamily: 'var(--font-mono)' }}>
@@ -70,7 +70,7 @@ export const EmployeeDetail = () => {
       {/* Info Details Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
         <div className="glass-panel" style={{ padding: '1.5rem' }}>
-          <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800 }}>
             <User size={18} /> Contact & Employment
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -79,13 +79,13 @@ export const EmployeeDetail = () => {
             <div><span style={{ color: 'var(--text-secondary)' }}>Location:</span> <strong>{emp.location || 'Bangalore'}</strong></div>
             <div><span style={{ color: 'var(--text-secondary)' }}>Employment Type:</span> <strong style={{ textTransform: 'capitalize' }}>{emp.employment_type}</strong></div>
             <div><span style={{ color: 'var(--text-secondary)' }}>Joining Date:</span> <strong>{emp.date_of_joining}</strong></div>
-            <div><span style={{ color: 'var(--text-secondary)' }}>Salary:</span> <strong style={{ color: 'var(--accent-emerald)' }}>₹{emp.salary?.toLocaleString()} / yr</strong></div>
+            <div><span style={{ color: 'var(--text-secondary)' }}>Salary:</span> <strong style={{ color: 'var(--accent-mint)' }}>₹{emp.salary?.toLocaleString()} / yr</strong></div>
           </div>
         </div>
 
         {/* Recent Attendance */}
         <div className="glass-panel" style={{ padding: '1.5rem' }}>
-          <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800 }}>
             <Clock size={18} /> Recent Attendance
           </h3>
           {!(attHistory && attHistory.length) ? (
@@ -105,7 +105,7 @@ export const EmployeeDetail = () => {
 
       {/* Recent Leave Requests */}
       <div className="glass-panel" style={{ padding: '1.5rem' }}>
-        <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--accent-amber)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.1rem', color: 'var(--accent-amber)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800 }}>
           <Calendar size={18} /> Leave Request History
         </h3>
         {!(leaveHistory && leaveHistory.length) ? (
@@ -113,10 +113,10 @@ export const EmployeeDetail = () => {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {leaveHistory.map((l: any) => (
-              <div key={l.id} style={{ background: 'rgba(0,0,0,0.2)', padding: '0.75rem 1rem', borderRadius: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={l.id} style={{ background: 'rgba(0,0,0,0.3)', padding: '0.85rem 1rem', borderRadius: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <div style={{ fontWeight: 600, textTransform: 'capitalize' }}>{l.leave_type} Leave ({l.total_days} days)</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{l.start_date} → {l.end_date} · {l.reason}</div>
+                  <div style={{ fontWeight: 700, textTransform: 'capitalize' }}>{l.leave_type} Leave ({l.total_days} days)</div>
+                  <div style={{ fontSize: '0.825rem', color: 'var(--text-secondary)' }}>{l.start_date} → {l.end_date} · {l.reason}</div>
                 </div>
                 <span className={`badge ${l.status === 'approved' ? 'badge-success' : l.status === 'pending' ? 'badge-warning' : 'badge-danger'}`}>
                   {l.status}

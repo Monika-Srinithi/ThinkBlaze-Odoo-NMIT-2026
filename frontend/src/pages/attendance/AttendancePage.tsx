@@ -67,8 +67,8 @@ export const AttendancePage = () => {
       {/* Header & Quick Check-in Widget */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Clock color="var(--primary)" size={34} /> Attendance Tracking
+          <h1 style={{ margin: 0, fontSize: '2.3rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)' }}>
+            <Clock color="var(--primary)" size={36} /> Attendance Tracking
           </h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Real-time check-in, check-out, working hours analysis, and monthly attendance rates.
@@ -81,7 +81,7 @@ export const AttendancePage = () => {
             <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Your Attendance Today
             </div>
-            <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary)' }}>
+            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--primary)' }}>
               Live · {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </div>
           </div>
@@ -97,18 +97,18 @@ export const AttendancePage = () => {
       {/* Stats Summary */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
         {[
-          { label: 'Present Today', value: presentCount, icon: CheckCircle2, color: 'var(--primary)', bg: 'rgba(16,185,129,0.1)' },
-          { label: 'Late Arrivals', value: lateCount, icon: AlertCircle, color: 'var(--accent-amber)', bg: 'rgba(245,158,11,0.1)' },
-          { label: 'On Leave Today', value: leaveCount, icon: Calendar, color: 'var(--accent-cyan)', bg: 'rgba(6,182,212,0.1)' },
-          { label: 'Total Tracked', value: records.length || 45, icon: Users, color: 'var(--accent-indigo)', bg: 'rgba(99,102,241,0.1)' },
+          { label: 'Present Today', value: presentCount, icon: CheckCircle2, color: 'var(--primary)', bg: 'rgba(16,185,129,0.15)' },
+          { label: 'Late Arrivals', value: lateCount, icon: AlertCircle, color: 'var(--accent-amber)', bg: 'rgba(245,158,11,0.15)' },
+          { label: 'On Leave Today', value: leaveCount, icon: Calendar, color: 'var(--accent-cyan)', bg: 'rgba(6,182,212,0.15)' },
+          { label: 'Total Tracked', value: records.length || 45, icon: Users, color: 'var(--accent-magenta)', bg: 'rgba(217,70,239,0.15)' },
         ].map((m, i) => (
-          <div key={i} className="glass-panel" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div key={i} className="glass-panel" style={{ padding: '1.35rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem' }}>{m.label}</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800 }}>{m.value}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>{m.label}</div>
+              <div style={{ fontSize: '2.2rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>{m.value}</div>
             </div>
-            <div style={{ background: m.bg, padding: '0.75rem', borderRadius: '0.75rem', color: m.color }}>
-              <m.icon size={24} />
+            <div style={{ background: m.bg, padding: '0.85rem', borderRadius: '0.8rem', color: m.color }}>
+              <m.icon size={26} />
             </div>
           </div>
         ))}
@@ -126,21 +126,22 @@ export const AttendancePage = () => {
             onClick={() => setActiveTab(tab.id as any)}
             style={{
               background: activeTab === tab.id ? 'var(--primary)' : 'transparent',
-              color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
+              color: activeTab === tab.id ? '#ffffff' : 'var(--text-secondary)',
               border: 'none',
-              padding: '0.6rem 1.25rem',
-              borderRadius: '0.6rem',
-              fontWeight: 700,
+              padding: '0.65rem 1.35rem',
+              borderRadius: '0.65rem',
+              fontWeight: 800,
               fontFamily: 'var(--font-heading)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              fontSize: '0.875rem',
+              fontSize: '0.9rem',
               transition: 'all 0.2s',
+              boxShadow: activeTab === tab.id ? '0 0 15px var(--primary-glow)' : 'none',
             }}
           >
-            <tab.icon size={16} /> {tab.label}
+            <tab.icon size={17} /> {tab.label}
           </button>
         ))}
       </div>
@@ -148,33 +149,33 @@ export const AttendancePage = () => {
       {/* Tab Content */}
       {activeTab === 'today' && (
         <div className="glass-panel" style={{ overflow: 'hidden' }}>
-          <h3 style={{ padding: '1.25rem 1.5rem', margin: 0, borderBottom: '1px solid var(--border-subtle)', fontSize: '1.1rem' }}>
+          <h3 style={{ padding: '1.35rem 1.6rem', margin: 0, borderBottom: '1px solid var(--border-subtle)', fontSize: '1.2rem', fontWeight: 800 }}>
             Today's Employee Attendance Roster
           </h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.925rem' }}>
             <thead>
-              <tr style={{ background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
-                <th style={{ padding: '1rem 1.25rem' }}>Employee</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Check In</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Check Out</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Hours Worked</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Status</th>
+              <tr style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Employee</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Check In</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Check Out</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Hours Worked</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Status</th>
               </tr>
             </thead>
             <tbody>
               {records.map((r: any) => (
                 <tr key={r.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '1rem 1.25rem', fontWeight: 700 }}>{r.employee_name || r.employee_code}</td>
-                  <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', color: r.check_in ? 'var(--primary)' : 'var(--text-muted)' }}>
+                  <td style={{ padding: '1.1rem 1.35rem', fontWeight: 700 }}>{r.employee_name || r.employee_code}</td>
+                  <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)', color: r.check_in ? 'var(--primary)' : 'var(--text-muted)' }}>
                     {r.check_in ? (typeof r.check_in === 'string' && r.check_in.includes('T') ? new Date(r.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : r.check_in) : '—'}
                   </td>
-                  <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', color: r.check_out ? 'var(--accent-cyan)' : 'var(--text-muted)' }}>
+                  <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)', color: r.check_out ? 'var(--accent-cyan)' : 'var(--text-muted)' }}>
                     {r.check_out ? (typeof r.check_out === 'string' && r.check_out.includes('T') ? new Date(r.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : r.check_out) : '—'}
                   </td>
-                  <td style={{ padding: '1rem 1.25rem', fontWeight: r.hours_worked ? 700 : 400 }}>
+                  <td style={{ padding: '1.1rem 1.35rem', fontWeight: r.hours_worked ? 700 : 400 }}>
                     {r.hours_worked ? `${r.hours_worked} hrs` : 'In Progress'}
                   </td>
-                  <td style={{ padding: '1rem 1.25rem' }}>
+                  <td style={{ padding: '1.1rem 1.35rem' }}>
                     <span className={`badge ${r.status === 'present' ? 'badge-success' : r.status === 'late' ? 'badge-warning' : r.status === 'on_leave' ? 'badge-info' : 'badge-danger'}`}>
                       {r.status}
                     </span>
@@ -188,25 +189,25 @@ export const AttendancePage = () => {
 
       {activeTab === 'history' && (
         <div className="glass-panel" style={{ overflow: 'hidden' }}>
-          <h3 style={{ padding: '1.25rem 1.5rem', margin: 0, borderBottom: '1px solid var(--border-subtle)', fontSize: '1.1rem' }}>
+          <h3 style={{ padding: '1.35rem 1.6rem', margin: 0, borderBottom: '1px solid var(--border-subtle)', fontSize: '1.2rem', fontWeight: 800 }}>
             My 30-Day Attendance Logs
           </h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.925rem' }}>
             <thead>
-              <tr style={{ background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
-                <th style={{ padding: '1rem 1.25rem' }}>Date</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Status</th>
-                <th style={{ padding: '1rem 1.25rem' }}>Hours Logged</th>
+              <tr style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Date</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Status</th>
+                <th style={{ padding: '1.1rem 1.35rem' }}>Hours Logged</th>
               </tr>
             </thead>
             <tbody>
               {(myAttendance && myAttendance.length > 0 ? myAttendance : records).map((r: any) => (
                 <tr key={r.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '1rem 1.25rem', fontWeight: 600 }}>{r.date}</td>
-                  <td style={{ padding: '1rem 1.25rem' }}>
+                  <td style={{ padding: '1.1rem 1.35rem', fontWeight: 700 }}>{r.date}</td>
+                  <td style={{ padding: '1.1rem 1.35rem' }}>
                     <span className={`badge ${r.status === 'present' ? 'badge-success' : 'badge-warning'}`}>{r.status}</span>
                   </td>
-                  <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)' }}>{r.hours_worked ? `${r.hours_worked} hrs` : '8.25 hrs'}</td>
+                  <td style={{ padding: '1.1rem 1.35rem', fontFamily: 'var(--font-mono)' }}>{r.hours_worked ? `${r.hours_worked} hrs` : '8.25 hrs'}</td>
                 </tr>
               ))}
             </tbody>
@@ -215,16 +216,16 @@ export const AttendancePage = () => {
       )}
 
       {activeTab === 'summary' && (
-        <div className="glass-panel" style={{ padding: '1.5rem' }}>
-          <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1.1rem' }}>Departmental Attendance Rates</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+        <div className="glass-panel" style={{ padding: '1.6rem' }}>
+          <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1.2rem', fontWeight: 800 }}>Departmental Attendance Rates</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.35rem' }}>
             {summaryList.map((s: any, i: number) => (
-              <div key={i} style={{ background: 'rgba(0,0,0,0.3)', padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>{s.employee_name}</div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginBottom: '1rem' }}>{s.department}</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+              <div key={i} style={{ background: 'rgba(0,0,0,0.35)', padding: '1.35rem', borderRadius: '0.8rem', border: '1px solid var(--border-subtle)' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: '0.25rem' }}>{s.employee_name}</div>
+                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>{s.department}</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                   <span>Attendance Rate:</span>
-                  <span style={{ fontWeight: 700, color: 'var(--primary)' }}>{s.attendance_rate}%</span>
+                  <span style={{ fontWeight: 800, color: 'var(--primary)' }}>{s.attendance_rate}%</span>
                 </div>
                 <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ width: `${s.attendance_rate}%`, height: '100%', background: 'var(--primary)', borderRadius: '4px' }} />

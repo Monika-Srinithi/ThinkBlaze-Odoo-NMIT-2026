@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Bot, Send, User, Sparkles, FileText, Zap } from 'lucide-react';
 import { apiPost } from '../../api/client';
 import { useNavigate } from 'react-router-dom';
@@ -83,7 +83,6 @@ export const CopilotPage = () => {
   };
 
   const renderFormattedText = (txt: string) => {
-    // Simple bold formatting replacement for markdown
     const parts = txt.split(/(\*\*.*?\*\*)/g);
     return parts.map((part, i) => {
       if (part.startsWith('**') && part.endsWith('**')) {
@@ -98,8 +97,8 @@ export const CopilotPage = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Bot color="var(--primary)" size={28} /> Dayflow HR Copilot
+          <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)' }}>
+            <Bot color="var(--primary)" size={32} /> Dayflow HR Copilot
           </h1>
           <p style={{ margin: '0.2rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
             Grounded AI Assistant connected directly to your workforce database and intelligence engine.
@@ -129,7 +128,7 @@ export const CopilotPage = () => {
                     width: 36,
                     height: 36,
                     borderRadius: '50%',
-                    background: isUser ? 'var(--accent-cyan)' : 'var(--primary)',
+                    background: isUser ? 'var(--accent-magenta)' : 'var(--primary)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -142,7 +141,7 @@ export const CopilotPage = () => {
 
                 <div
                   style={{
-                    background: isUser ? 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)' : 'rgba(255,255,255,0.05)',
+                    background: isUser ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : 'rgba(255,255,255,0.05)',
                     border: isUser ? 'none' : '1px solid var(--border-subtle)',
                     padding: '1rem 1.25rem',
                     borderRadius: '1rem',
@@ -151,7 +150,7 @@ export const CopilotPage = () => {
                     fontSize: '0.925rem',
                     lineHeight: 1.6,
                     whiteSpace: 'pre-wrap',
-                    color: 'var(--text-primary)',
+                    color: '#ffffff',
                   }}
                 >
                   {renderFormattedText(m.text)}
@@ -159,10 +158,10 @@ export const CopilotPage = () => {
                   {/* Trace Footer */}
                   {m.traceId && (
                     <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      <span>Intent: <strong style={{ color: 'var(--accent-cyan)' }}>{m.intent}</strong></span>
+                      <span>Intent: <strong style={{ color: 'var(--accent-mint)' }}>{m.intent}</strong></span>
                       <button
                         onClick={() => setExpandedTraceId(expandedTraceId === m.traceId ? null : m.traceId!)}
-                        style={{ background: 'transparent', border: 'none', color: 'var(--primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                        style={{ background: 'transparent', border: 'none', color: 'var(--primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem', fontWeight: 700 }}
                       >
                         <Zap size={12} /> Trace #{m.traceId.slice(0, 8)}
                       </button>
@@ -179,21 +178,21 @@ export const CopilotPage = () => {
                       key={idx}
                       onClick={() => handleSend(sugg)}
                       style={{
-                        background: 'rgba(99,102,241,0.1)',
-                        border: '1px solid rgba(99,102,241,0.3)',
-                        color: '#a5b4fc',
+                        background: 'rgba(16,185,129,0.14)',
+                        border: '1px solid rgba(16,185,129,0.4)',
+                        color: 'var(--accent-mint)',
                         padding: '0.4rem 0.85rem',
                         borderRadius: '2rem',
                         fontSize: '0.8rem',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         cursor: 'pointer',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '0.35rem',
                         transition: 'all 0.2s',
                       }}
-                      onMouseOver={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.25)')}
-                      onMouseOut={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.1)')}
+                      onMouseOver={(e) => (e.currentTarget.style.background = 'rgba(16,185,129,0.28)')}
+                      onMouseOut={(e) => (e.currentTarget.style.background = 'rgba(16,185,129,0.14)')}
                     >
                       <Sparkles size={12} /> {sugg}
                     </button>
@@ -236,4 +235,3 @@ export const CopilotPage = () => {
 };
 
 export default CopilotPage;
-

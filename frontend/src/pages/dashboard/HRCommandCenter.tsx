@@ -43,7 +43,7 @@ export default function HRCommandCenter() {
   });
 
   const score = healthData?.overall_health_score ?? FALLBACK_HEALTH.overall_health_score;
-  const gaugeColor = score > 80 ? 'var(--success)' : score > 60 ? 'var(--warning)' : 'var(--danger)';
+  const gaugeColor = score > 80 ? 'var(--primary)' : score > 60 ? 'var(--warning)' : 'var(--danger)';
   
   const fetchedTeams = healthData?.teams || [];
   const teams = fetchedTeams.length > 0 ? fetchedTeams : FALLBACK_HEALTH.teams;
@@ -64,14 +64,14 @@ export default function HRCommandCenter() {
       {/* Header Bar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)' }}>
+          <h1 style={{ margin: 0, fontSize: '2.4rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.04em' }}>
             <Activity color="var(--primary)" size={34} /> HR Command Center
           </h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Real-time workforce health monitoring, operational risk detection, and pending action simulation.
           </p>
         </div>
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', background: 'var(--surface-elevated)', padding: '0.5rem 1rem', borderRadius: '2rem', border: '1px solid var(--border)' }}>
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', background: 'var(--surface-elevated)', padding: '0.5rem 1rem', borderRadius: '0.375rem', border: '1px solid var(--border)' }}>
           Live · {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </div>
       </div>
@@ -82,19 +82,13 @@ export default function HRCommandCenter() {
         <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <div style={{ position: 'relative', width: '84px', height: '84px', flexShrink: 0 }}>
             <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
-              <defs>
-                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#00D9FF" />
-                  <stop offset="100%" stopColor="#7C5CFF" />
-                </linearGradient>
-              </defs>
               <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--border)" strokeWidth="12" />
               <circle
                 cx="50"
                 cy="50"
                 r="40"
                 fill="transparent"
-                stroke="url(#scoreGrad)"
+                stroke="var(--primary)"
                 strokeWidth="12"
                 strokeDasharray={`${(score / 100) * 251.2} 251.2`}
                 style={{ transition: 'stroke-dasharray 1.2s ease-in-out' }}
@@ -105,10 +99,10 @@ export default function HRCommandCenter() {
             </div>
           </div>
           <div>
-            <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem', fontWeight: 700 }}>
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem', fontWeight: 800 }}>
               Workforce Health
             </div>
-            <div style={{ fontWeight: 800, fontSize: '1.15rem', color: gaugeColor, fontFamily: 'var(--font-heading)' }}>
+            <div style={{ fontWeight: 900, fontSize: '1.15rem', color: gaugeColor, fontFamily: 'var(--font-heading)' }}>
               {score >= 85 ? 'Excellent' : score >= 70 ? 'Good' : score >= 55 ? 'Needs Attention' : 'Critical Risk'}
             </div>
           </div>
@@ -121,10 +115,10 @@ export default function HRCommandCenter() {
         ].map((m, i) => (
           <div key={i} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem' }}>{m.label}</div>
-              <div style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>{m.value}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>{m.label}</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>{m.value}</div>
             </div>
-            <div style={{ background: m.bg, padding: '0.75rem', borderRadius: '0.75rem', color: m.color }}>
+            <div style={{ background: m.bg, padding: '0.75rem', borderRadius: '0.375rem', color: m.color }}>
               <m.icon size={24} />
             </div>
           </div>
@@ -138,7 +132,7 @@ export default function HRCommandCenter() {
           {/* Action Center — Pending Leaves */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h2 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Zap size={22} color="var(--warning)" /> Action Center
                 <span className="badge badge-warning" style={{ marginLeft: '0.5rem' }}>
                   {pendingLeaves.length} Pending Actions
@@ -157,13 +151,13 @@ export default function HRCommandCenter() {
                       justifyContent: 'space-between',
                       padding: '1.25rem',
                       background: 'var(--surface-elevated)',
-                      borderRadius: '0.75rem',
+                      borderRadius: '0.375rem',
                       border: '1px solid var(--border)',
                       transition: 'all 0.2s',
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+                      <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                         {leave.employee_name}
                         <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 400 }}> · {leave.designation}</span>
                       </div>
@@ -185,7 +179,7 @@ export default function HRCommandCenter() {
                       <button
                         className="btn-primary"
                         style={{ padding: '0.55rem 1rem', fontSize: '0.85rem' }}
-                        onClick={() => navigate(`/simulator/${leave.id}`)}
+                        onClick={() => navigate(`/simulator`)}
                       >
                         Simulate <ArrowRight size={15} />
                       </button>
@@ -198,20 +192,20 @@ export default function HRCommandCenter() {
 
           {/* Team Capacity Overview */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
-            <h2 style={{ margin: '0 0 1.5rem 0', fontSize: '1.3rem', fontWeight: 800 }}>Team Capacity Overview</h2>
+            <h2 style={{ margin: '0 0 1.5rem 0', fontSize: '1.3rem', fontWeight: 900 }}>Team Capacity Overview</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {teams.map((team: any, i: number) => {
                 const cap = team.capacity_pct || 0;
-                const barColor = cap < 65 ? 'var(--danger)' : cap < 80 ? 'var(--warning)' : 'var(--success)';
+                const barColor = cap < 65 ? 'var(--danger)' : cap < 80 ? 'var(--warning)' : 'var(--primary)';
                 const riskBadge = team.risk_level === 'critical' ? 'badge-danger' : team.risk_level === 'high' ? 'badge-warning' : 'badge-success';
 
                 return (
                   <div key={i}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{team.name}</span>
+                      <span style={{ fontWeight: 800, fontSize: '0.95rem' }}>{team.name}</span>
                       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', fontSize: '0.85rem' }}>
                         <span className={`badge ${riskBadge}`}>{team.risk_level}</span>
-                        <span style={{ fontWeight: 800, color: barColor, fontFamily: 'var(--font-heading)', fontSize: '1rem' }}>{cap}%</span>
+                        <span style={{ fontWeight: 900, color: barColor, fontFamily: 'var(--font-heading)', fontSize: '1rem' }}>{cap}%</span>
                       </div>
                     </div>
                     <div style={{ width: '100%', height: '8px', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
@@ -236,24 +230,24 @@ export default function HRCommandCenter() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           {/* Risk Alerts Card */}
           <div className="glass-panel" style={{ padding: '1.5rem', flex: 1 }}>
-            <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <ShieldAlert size={20} color="var(--danger)" /> Top Operational Risks
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {alerts.map((a: any, i: number) => {
-                const borderColor = a.severity === 'critical' ? 'var(--danger)' : a.severity === 'high' ? 'var(--warning)' : 'var(--primary)';
-                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : a.severity === 'high' ? 'var(--warning-soft)' : 'var(--primary-soft)';
+                const borderColor = a.severity === 'critical' ? 'var(--danger)' : a.severity === 'high' ? 'var(--secondary-accent)' : 'var(--warning)';
+                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : a.severity === 'high' ? 'rgba(255, 138, 61, 0.12)' : 'var(--warning-soft)';
                 return (
                   <div
                     key={i}
                     style={{
                       padding: '1rem',
-                      borderRadius: '0.65rem',
+                      borderRadius: '0.375rem',
                       borderLeft: `4px solid ${borderColor}`,
                       background: bg,
                       fontSize: '0.875rem',
                       lineHeight: 1.5,
-                      fontWeight: 500,
+                      fontWeight: 600,
                     }}
                   >
                     {a.message}
@@ -265,18 +259,18 @@ export default function HRCommandCenter() {
 
           {/* Risk Distribution */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
-            <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 700 }}>Risk Distribution Matrix</h3>
-            <div style={{ display: 'flex', height: '20px', borderRadius: '10px', overflow: 'hidden', width: '100%', gap: '3px' }}>
-              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)', borderRadius: '3px' }} title={`Critical: ${riskDist.critical}`} />
-              <div style={{ flex: riskDist.high || 1, background: 'var(--warning)', borderRadius: '3px' }} title={`High: ${riskDist.high}`} />
-              <div style={{ flex: riskDist.medium || 1, background: 'var(--primary)', borderRadius: '3px' }} title={`Medium: ${riskDist.medium}`} />
-              <div style={{ flex: riskDist.low || 2, background: 'var(--success)', borderRadius: '3px' }} title={`Normal: ${riskDist.low}`} />
+            <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 800 }}>Risk Distribution Matrix</h3>
+            <div style={{ display: 'flex', height: '20px', borderRadius: '4px', overflow: 'hidden', width: '100%', gap: '3px' }}>
+              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)', borderRadius: '2px' }} title={`Critical: ${riskDist.critical}`} />
+              <div style={{ flex: riskDist.high || 1, background: 'var(--secondary-accent)', borderRadius: '2px' }} title={`High: ${riskDist.high}`} />
+              <div style={{ flex: riskDist.medium || 1, background: 'var(--warning)', borderRadius: '2px' }} title={`Medium: ${riskDist.medium}`} />
+              <div style={{ flex: riskDist.low || 2, background: 'var(--primary)', borderRadius: '2px' }} title={`Normal: ${riskDist.low}`} />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.85rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
-              <span>🔴 {riskDist.critical || 1} Critical</span>
-              <span>🟠 {riskDist.high || 1} High</span>
-              <span>🟡 {riskDist.medium || 1} Med</span>
-              <span>🟢 {riskDist.low || 2} Normal</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.85rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+              <span style={{ color: 'var(--danger)' }}>🔴 {riskDist.critical || 1} Critical</span>
+              <span style={{ color: 'var(--secondary-accent)' }}>🟠 {riskDist.high || 1} High</span>
+              <span style={{ color: 'var(--warning)' }}>🟡 {riskDist.medium || 1} Med</span>
+              <span style={{ color: 'var(--primary)' }}>🟢 {riskDist.low || 2} Normal</span>
             </div>
           </div>
         </div>

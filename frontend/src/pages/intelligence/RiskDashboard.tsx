@@ -93,8 +93,8 @@ export const RiskDashboard = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)' }}>
-            <AlertTriangle color="var(--ai)" size={34} /> Workforce Risk Engine
+          <h1 style={{ margin: 0, fontSize: '2.4rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.04em' }}>
+            <AlertTriangle color="var(--primary)" size={34} /> Workforce Risk Engine
           </h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Multi-factor operational risk scoring powered by attendance, leave overlaps, and staffing capacity.
@@ -104,29 +104,32 @@ export const RiskDashboard = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
         {riskList.map((r: any) => {
-          const isHigh = r.risk_level === 'critical' || r.risk_level === 'high';
-          const badgeClass = r.risk_level === 'critical' ? 'badge-danger' : r.risk_level === 'high' ? 'badge-warning' : 'badge-success';
+          const isCritical = r.risk_level === 'critical';
+          const isHigh = r.risk_level === 'high';
+          const badgeClass = isCritical ? 'badge-danger' : isHigh ? 'badge-warning' : 'badge-success';
+          const scoreColor = isCritical ? 'var(--danger)' : isHigh ? 'var(--secondary-accent)' : 'var(--primary)';
+
           return (
             <div key={r.team} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 800 }}>{r.team}</h3>
+                  <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 900 }}>{r.team}</h3>
                   <span className={`badge ${badgeClass}`}>{r.risk_level}</span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '2.6rem', fontWeight: 900, color: isHigh ? 'var(--danger)' : 'var(--success)', fontFamily: 'var(--font-heading)' }}>
+                  <div style={{ fontSize: '2.6rem', fontWeight: 900, color: scoreColor, fontFamily: 'var(--font-heading)' }}>
                     {typeof r.risk_score === 'number' ? r.risk_score.toFixed(1) : r.risk_score}
                   </div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>/ 100 Risk Score</div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 600 }}>/ 100 Risk Score</div>
                 </div>
 
                 <div style={{ marginBottom: '1.25rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.35rem', fontWeight: 700 }}>Contributing Factors:</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.35rem', fontWeight: 800 }}>Contributing Factors:</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                     {(r.factors || []).slice(0, 4).map((f: any, i: number) => (
-                      <div key={i} style={{ fontSize: '0.825rem', display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-primary)' }}>
-                        <span style={{ color: isHigh ? 'var(--danger)' : 'var(--success)' }}>•</span> {f.factor} (+{f.score} pts)
+                      <div key={i} style={{ fontSize: '0.825rem', display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-primary)', fontWeight: 500 }}>
+                        <span style={{ color: scoreColor }}>•</span> {f.factor} (+{f.score} pts)
                       </div>
                     ))}
                   </div>
@@ -148,12 +151,12 @@ export const RiskDashboard = () => {
 
       {/* Evidence Modal ("WHY?") */}
       {selectedTeamEvidence && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '1rem' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(8,9,10,0.85)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '1rem' }}>
           <div className="glass-panel" style={{ width: '100%', maxWidth: '650px', padding: '2rem', maxHeight: '85vh', overflowY: 'auto', background: 'var(--surface-elevated)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <div>
-                <span className="badge badge-ai" style={{ marginBottom: '0.35rem' }}>AI Evidence Trace</span>
-                <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800 }}>Why is {selectedTeamEvidence} at Risk?</h2>
+                <span className="badge badge-info" style={{ marginBottom: '0.35rem' }}>AI Evidence Trace</span>
+                <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>Why is {selectedTeamEvidence} at Risk?</h2>
               </div>
               <button style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }} onClick={() => setSelectedTeamEvidence(null)}>
                 <X size={22} />
@@ -162,11 +165,11 @@ export const RiskDashboard = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div>
-                <h4 style={{ color: 'var(--text-secondary)', margin: '0 0 0.75rem 0', fontSize: '0.9rem', fontWeight: 700 }}>Risk Breakdown & Factors</h4>
+                <h4 style={{ color: 'var(--text-secondary)', margin: '0 0 0.75rem 0', fontSize: '0.9rem', fontWeight: 800 }}>Risk Breakdown & Factors</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {(currentEvidence.risk_factors || []).map((f: any, i: number) => (
-                    <div key={i} style={{ background: 'var(--surface)', padding: '0.85rem 1rem', borderRadius: '0.6rem', borderLeft: '4px solid var(--danger)', fontSize: '0.875rem' }}>
-                      <div style={{ fontWeight: 700, color: 'var(--danger)' }}>{f.factor} (+{f.score} pts)</div>
+                    <div key={i} style={{ background: 'var(--surface)', padding: '0.85rem 1rem', borderRadius: '0.375rem', borderLeft: '4px solid var(--danger)', fontSize: '0.875rem' }}>
+                      <div style={{ fontWeight: 800, color: 'var(--danger)' }}>{f.factor} (+{f.score} pts)</div>
                       <div style={{ color: 'var(--text-secondary)', fontSize: '0.825rem', marginTop: '0.2rem' }}>{f.detail}</div>
                     </div>
                   ))}
@@ -174,12 +177,12 @@ export const RiskDashboard = () => {
               </div>
 
               <div>
-                <h4 style={{ color: 'var(--text-secondary)', margin: '0 0 0.75rem 0', fontSize: '0.9rem', fontWeight: 700 }}>Overlapping Leave & Absences</h4>
+                <h4 style={{ color: 'var(--text-secondary)', margin: '0 0 0.75rem 0', fontSize: '0.9rem', fontWeight: 800 }}>Overlapping Leave & Absences</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {(currentEvidence.leave_evidence || []).map((l: any, i: number) => (
-                    <div key={i} style={{ background: 'var(--surface)', padding: '0.75rem 1rem', borderRadius: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--border)' }}>
+                    <div key={i} style={{ background: 'var(--surface)', padding: '0.75rem 1rem', borderRadius: '0.375rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--border)' }}>
                       <div>
-                        <div style={{ fontWeight: 700 }}>{l.employee}</div>
+                        <div style={{ fontWeight: 800 }}>{l.employee}</div>
                         <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{l.start_date} → {l.end_date}</div>
                       </div>
                       <span className={`badge ${l.status === 'approved' ? 'badge-danger' : 'badge-warning'}`}>{l.status}</span>

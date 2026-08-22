@@ -27,14 +27,14 @@ export const Header = () => {
             type="text"
             className="input-field"
             placeholder="Search Dayflow workforce intelligence, team risk, employees..."
-            style={{ paddingLeft: '2.5rem', borderRadius: '2rem', fontSize: '0.85rem' }}
+            style={{ paddingLeft: '2.5rem', borderRadius: '0.375rem', fontSize: '0.85rem' }}
           />
         </div>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
         {/* AI Decision Engine Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--primary-soft)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--primary-soft)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '0.375rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)' }}>
           <Sparkles size={14} className="animate-live-pulse" /> AI Decision Engine Active
         </div>
 
@@ -49,7 +49,7 @@ export const Header = () => {
             background: 'var(--hover)',
             border: '1px solid var(--border)',
             padding: '0.45rem 0.85rem',
-            borderRadius: '2rem',
+            borderRadius: '0.375rem',
             color: 'var(--text-primary)',
             cursor: 'pointer',
             display: 'flex',
@@ -68,7 +68,7 @@ export const Header = () => {
             </>
           ) : (
             <>
-              <Moon size={15} color="var(--ai)" /> Dark
+              <Moon size={15} color="var(--primary)" /> Dark
             </>
           )}
         </button>
@@ -80,7 +80,7 @@ export const Header = () => {
             background: 'var(--hover)',
             border: '1px solid var(--border)',
             padding: '0.5rem',
-            borderRadius: '50%',
+            borderRadius: '0.375rem',
             color: 'var(--text-secondary)',
             cursor: 'pointer',
             transition: 'transform 0.2s',

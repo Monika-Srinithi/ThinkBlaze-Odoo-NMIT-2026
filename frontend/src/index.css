@@ -1,32 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"] {
-  --bg: #070B14;
+  /* Exact User-Requested Table Hex Codes */
+  --bg: #070B14;               /* Main background: Deep Navy Black */
   --sidebar: #070B14;
 
-  --surface: #0D1422;
-  --surface-elevated: #111B2E;
+  --surface: #0D1422;          /* Card background: Dark Navy */
+  --surface-elevated: #111B2E; /* Elevated card: Slate Navy */
 
-  --primary: #00D9FF;
-  --primary-soft: #08313A;
+  --primary: #00D9FF;          /* Primary accent: Electric Cyan */
+  --primary-soft: rgba(0, 217, 255, 0.15);
 
-  --ai: #7C5CFF;
-  --ai-soft: #211A46;
+  --ai: #7C5CFF;               /* Secondary accent: AI Violet */
+  --ai-soft: rgba(124, 92, 255, 0.15);
 
-  --success: #22C55E;
-  --success-soft: #10261A;
+  --success: #22C55E;          /* Success: Emerald */
+  --success-soft: rgba(34, 197, 94, 0.15);
 
-  --warning: #F59E0B;
-  --warning-soft: #2A2110;
+  --warning: #F59E0B;          /* Warning: Amber */
+  --warning-soft: rgba(245, 158, 11, 0.15);
 
-  --danger: #FF3B6B;
-  --danger-soft: #2A111D;
+  --danger: #FF3B6B;           /* Critical: Rose Red */
+  --danger-soft: rgba(255, 59, 107, 0.15);
 
-  --text-primary: #F4F7FB;
-  --text-secondary: #94A3B8;
+  --text-primary: #F4F7FB;     /* Primary text: Soft White */
+  --text-secondary: #94A3B8;   /* Secondary text: Cool Gray */
   --text-muted: #64748B;
 
-  --border: #243149;
+  --border: #243149;           /* Borders: Blue Gray */
   --divider: #182337;
 
   --input-bg: #0A101C;
@@ -41,26 +42,27 @@
 }
 
 [data-theme="light"] {
+  /* Light Mode using exact same user accents */
   --bg: #F5F7FB;
   --sidebar: #FFFFFF;
 
   --surface: #FFFFFF;
   --surface-elevated: #F8FAFC;
 
-  --primary: #009FC2;
-  --primary-soft: #E6F9FD;
+  --primary: #00D9FF;
+  --primary-soft: rgba(0, 217, 255, 0.12);
 
-  --ai: #6845E8;
-  --ai-soft: #F0ECFF;
+  --ai: #7C5CFF;
+  --ai-soft: rgba(124, 92, 255, 0.12);
 
-  --success: #16A34A;
-  --success-soft: #EAF8EF;
+  --success: #22C55E;
+  --success-soft: rgba(34, 197, 94, 0.12);
 
-  --warning: #D97706;
-  --warning-soft: #FFF6DF;
+  --warning: #F59E0B;
+  --warning-soft: rgba(245, 158, 11, 0.12);
 
-  --danger: #E11D48;
-  --danger-soft: #FFEAF0;
+  --danger: #FF3B6B;
+  --danger-soft: rgba(255, 59, 107, 0.12);
 
   --text-primary: #0F172A;
   --text-secondary: #475569;
@@ -72,9 +74,9 @@
   --input-bg: #F8FAFC;
   --hover: #F1F5F9;
 
-  --focus: #009FC2;
+  --focus: #00D9FF;
 
-  --btn-primary-text: #FFFFFF;
+  --btn-primary-text: #070B14;
 }
 
 * {
@@ -165,7 +167,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--primary);
   padding: 0.6rem 1.25rem;
   border-radius: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: -0.01em;
@@ -174,6 +176,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.5rem;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 217, 255, 0.25);
 }
 .btn-primary:hover {
   opacity: 0.92;
@@ -206,7 +209,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--danger);
   padding: 0.6rem 1.25rem;
   border-radius: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: -0.01em;
@@ -226,7 +229,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--success);
   padding: 0.6rem 1.25rem;
   border-radius: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: -0.01em;

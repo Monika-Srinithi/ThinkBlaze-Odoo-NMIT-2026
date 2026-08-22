@@ -21,14 +21,14 @@ export default function Sidebar() {
     padding: '0.7rem 0.95rem',
     borderRadius: '0.65rem',
     color: isActive ? '#ffffff' : 'var(--text-secondary)',
-    background: isActive ? 'linear-gradient(135deg, rgba(16,185,129,0.22) 0%, rgba(16,185,129,0.06) 100%)' : 'transparent',
+    background: isActive ? 'linear-gradient(135deg, rgba(0,240,255,0.22) 0%, rgba(0,240,255,0.06) 100%)' : 'transparent',
     borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
     textDecoration: 'none',
     fontWeight: isActive ? 700 : 500,
     fontSize: '0.9rem',
     fontFamily: 'var(--font-heading)',
-    transition: 'all 0.15s ease',
-    boxShadow: isActive ? '0 0 18px var(--primary-glow)' : 'none',
+    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+    boxShadow: isActive ? '0 0 20px var(--primary-glow)' : 'none',
   });
 
   return (
@@ -44,14 +44,14 @@ export default function Sidebar() {
     }}>
       {/* Brand Header */}
       <div style={{ padding: '1.6rem 1.35rem', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-        <div style={{ background: 'linear-gradient(135deg, #10b981 0%, #047857 100%)', padding: '0.6rem', borderRadius: '0.7rem', display: 'flex', boxShadow: '0 0 20px var(--primary-glow)' }}>
-          <Activity color="#ffffff" size={24} />
+        <div style={{ background: 'linear-gradient(135deg, #00f0ff 0%, #00a8b5 100%)', padding: '0.6rem', borderRadius: '0.7rem', display: 'flex', boxShadow: '0 0 22px var(--primary-glow)' }}>
+          <Activity color="#06070a" size={24} />
         </div>
         <div>
           <h1 className="gradient-text" style={{ margin: 0, fontSize: '1.45rem', fontWeight: 900, letterSpacing: '-0.03em' }}>
             Dayflow
           </h1>
-          <div style={{ fontSize: '0.7rem', color: 'var(--accent-mint)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--accent-mint)', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             Workforce AI
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function Sidebar() {
         <NavLink to="/dashboard" end style={({ isActive }) => navItemStyle(isActive)}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Activity size={19} /> Command Center</div>
-            <span style={{ background: 'var(--accent-rose)', color: '#fff', fontSize: '0.65rem', padding: '0.12rem 0.5rem', borderRadius: '0.35rem', fontWeight: 800 }}>LIVE</span>
+            <span className="animate-live-pulse" style={{ background: 'var(--accent-rose)', color: '#fff', fontSize: '0.65rem', padding: '0.12rem 0.5rem', borderRadius: '0.35rem', fontWeight: 800 }}>LIVE</span>
           </div>
         </NavLink>
 
@@ -94,7 +94,7 @@ export default function Sidebar() {
         <NavLink to="/simulator" style={({ isActive }) => navItemStyle(isActive)}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Zap size={19} /> What-If Simulator</div>
-            <span style={{ background: 'linear-gradient(135deg, #10b981, #d946ef)', color: '#fff', fontSize: '0.65rem', padding: '0.12rem 0.5rem', borderRadius: '0.35rem', fontWeight: 800 }}>WOW</span>
+            <span style={{ background: 'linear-gradient(135deg, #00f0ff, #e040fb)', color: '#06070a', fontSize: '0.65rem', padding: '0.12rem 0.5rem', borderRadius: '0.35rem', fontWeight: 800 }}>WOW</span>
           </div>
         </NavLink>
 
@@ -118,12 +118,12 @@ export default function Sidebar() {
       {/* User Info */}
       <div style={{ padding: '1.1rem 1.25rem', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.3)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #10b981, #047857)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: '0.85rem' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #00f0ff, #00a8b5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#06070a', fontWeight: 900, fontSize: '0.85rem' }}>
             AD
           </div>
           <div>
             <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--text-primary)' }}>Admin HR</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--accent-mint)', fontWeight: 600 }}>HR Director</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--accent-mint)', fontWeight: 700 }}>HR Director</div>
           </div>
         </div>
         <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.15s' }} title="Logout" onMouseOver={e => e.currentTarget.style.color = 'var(--accent-rose)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>

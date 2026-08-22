@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Sandalwood Gold & Obsidian Black Design System */
+  /* Sandalwood Gold & Obsidian Black Design System (NO GREEN AT ALL) */
   --bg: #0A0A0A;                     /* Pure Deep Obsidian Black */
   --bg-secondary: #121212;           /* Dark Charcoal Surface */
   --sidebar: #050505;                /* Obsidian Black Sidebar */
@@ -21,8 +21,8 @@
 
   --secondary-accent: #E5A866;
 
-  --success: #34D399;                /* Sage Green */
-  --success-soft: rgba(52, 211, 153, 0.15);
+  --success: #D49B5B;                /* Sandalwood Gold Success (PURGED ALL GREEN) */
+  --success-soft: rgba(212, 155, 91, 0.15);
 
   --warning: #FFB547;                /* Warm Amber */
   --warning-soft: rgba(255, 181, 71, 0.15);

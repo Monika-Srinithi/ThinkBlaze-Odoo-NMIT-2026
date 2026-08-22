@@ -4,10 +4,9 @@ export const Header = () => {
   return (
     <header
       style={{
-        height: '62px',
-        background: 'rgba(10, 14, 22, 0.88)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-subtle)',
+        height: '60px',
+        background: '#0D1422',
+        borderBottom: '1px solid #243149',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -19,7 +18,7 @@ export const Header = () => {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '400px' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
           <input
             type="text"
             className="input-field"
@@ -30,22 +29,22 @@ export const Header = () => {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0,240,255,0.14)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid rgba(0,240,255,0.4)', boxShadow: '0 0 12px var(--primary-glow)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0, 217, 255, 0.12)', color: '#00D9FF', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid rgba(0, 217, 255, 0.35)', boxShadow: '0 0 12px rgba(0, 217, 255, 0.2)' }}>
           <Sparkles size={14} className="animate-live-pulse" /> AI Decision Engine Active
         </div>
 
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+        <div style={{ fontSize: '0.85rem', color: '#94A3B8', fontWeight: 600 }}>
           {new Date().toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
 
         <button
           style={{
             position: 'relative',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid var(--border-medium)',
+            background: '#111B2E',
+            border: '1px solid #243149',
             padding: '0.5rem',
             borderRadius: '50%',
-            color: 'var(--text-secondary)',
+            color: '#94A3B8',
             cursor: 'pointer',
             transition: 'transform 0.2s',
           }}
@@ -53,7 +52,7 @@ export const Header = () => {
           onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
           onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
         >
-          <Bell size={17} />
+          <Bell size={16} />
           <span
             style={{
               position: 'absolute',
@@ -61,9 +60,9 @@ export const Header = () => {
               right: '2px',
               width: '8px',
               height: '8px',
-              background: 'var(--accent-rose)',
+              background: '#FF3B6B',
               borderRadius: '50%',
-              boxShadow: '0 0 8px var(--accent-rose)',
+              boxShadow: '0 0 8px #FF3B6B',
             }}
           />
         </button>

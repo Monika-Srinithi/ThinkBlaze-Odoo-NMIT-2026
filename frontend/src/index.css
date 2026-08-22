@@ -1,49 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-:root, [data-theme="light"], [data-theme="dark"] {
-  /* Light Sandalwood & Organic Warm Sand Palette */
-  --bg: #F4EFEA;                     /* Warm Sandalwood Silk Canvas */
-  --bg-secondary: #FAF6F0;           /* Soft Cream Sand */
-  --sidebar: #FAF6F0;
+:root, [data-theme="dark"], [data-theme="light"] {
+  /* Spotify Obsidian Ash & Neon Green Design System */
+  --bg: #121212;                     /* Iconic Dark Obsidian Slate */
+  --bg-secondary: #181818;           /* Dark Ash Surface */
+  --sidebar: #0A0A0A;                /* Pure Ash Black Sidebar */
 
-  --surface: #FFFFFF;                /* Pure Linen Card Surface */
-  --surface-elevated: #F6F1EA;       /* Elevated Almond Surface */
-  --card-hover: #F6F1EA;
+  --surface: #181818;                /* Dark Ash Charcoal Card */
+  --surface-elevated: #282828;       /* Elevated Slate Ash Surface */
+  --card-hover: #282828;
 
-  --primary: #C77A38;                /* Warm Sandalwood Terracotta Gold */
-  --primary-hover: #B36829;
-  --primary-glow: rgba(199, 122, 56, 0.2);
-  --primary-soft: rgba(199, 122, 56, 0.12);
+  --primary: #1DB954;                /* Iconic Spotify Electric Green */
+  --primary-hover: #1ED760;          /* High-Vibrancy Neon Green */
+  --primary-glow: rgba(30, 215, 96, 0.3);
+  --primary-soft: rgba(29, 185, 84, 0.15);
 
-  --ai: #C77A38;
-  --ai-glow: rgba(199, 122, 56, 0.2);
-  --ai-soft: rgba(199, 122, 56, 0.12);
+  --ai: #1DB954;                     /* Intelligence Accent: Spotify Green */
+  --ai-glow: rgba(30, 215, 96, 0.3);
+  --ai-soft: rgba(29, 185, 84, 0.15);
 
-  --secondary-accent: #D48C46;
+  --secondary-accent: #B3B3B3;       /* Cool Ash Gray */
 
-  --success: #2E7D5B;                /* Warm Forest Sage */
-  --success-soft: rgba(46, 125, 91, 0.12);
+  --success: #1DB954;                /* Spotify Green */
+  --success-soft: rgba(29, 185, 84, 0.15);
 
-  --warning: #D97706;                /* Warm Gold Amber */
-  --warning-soft: rgba(217, 119, 6, 0.12);
+  --warning: #F59E0B;                /* Electric Amber */
+  --warning-soft: rgba(245, 158, 11, 0.15);
 
-  --danger: #C93B3B;                 /* Sandalwood Crimson */
-  --danger-soft: rgba(201, 59, 59, 0.12);
+  --danger: #FF3B30;                 /* Crimson Red */
+  --danger-soft: rgba(255, 59, 48, 0.15);
 
-  --text-primary: #2C221E;           /* Deep Espresso Roast Text */
-  --text-secondary: #786C65;         /* Warm Taupe Gray */
-  --text-muted: #9E928A;
+  --text-primary: #FFFFFF;           /* Crisp High-Contrast Pure White */
+  --text-secondary: #B3B3B3;         /* Muted Ash Gray */
+  --text-muted: #727272;
 
-  --border: #E6DDD5;                 /* Hairline Sandalwood Border */
-  --divider: #EFE7DF;
+  --border: #282828;                 /* Hairline Ash Charcoal Border */
+  --divider: #282828;
 
-  --input-bg: #FAF6F0;
-  --hover: #F6F1EA;
+  --input-bg: #121212;
+  --hover: #282828;
 
-  --focus: #C77A38;
+  --focus: #1DB954;
 
-  --btn-primary-bg: #C77A38;
-  --btn-primary-text: #FFFFFF;
+  --btn-primary-bg: #1DB954;
+  --btn-primary-text: #121212;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -63,7 +63,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -73,35 +73,35 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* Sandalwood Glass Panel */
+/* Spotify Ash Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.6rem;
-  box-shadow: 0 4px 16px rgba(44, 34, 30, 0.05);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-panel:hover {
   background: var(--surface-elevated);
-  border-color: rgba(199, 122, 56, 0.35);
+  border-color: rgba(30, 215, 96, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(44, 34, 30, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--primary-soft);
 }
 
 .glass-panel-glow {
   background: var(--surface);
   border: 1px solid var(--primary);
   box-shadow: 0 0 20px var(--primary-glow);
-  border-radius: 0.6rem;
+  border-radius: 0.5rem;
 }
 
-/* Gradient Text for Branding */
+/* Spotify Green Accent Text */
 .gradient-text {
   color: var(--primary);
 }
 
-.highlight-sandalwood {
+.highlight-green {
   color: var(--primary);
 }
 
@@ -127,9 +127,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes livePulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .animate-spin {
@@ -140,13 +140,13 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Sandalwood Primary CTA Button */
+/* Spotify Green Primary CTA Button */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   font-weight: 800;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -160,17 +160,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-primary:hover {
   background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(199, 122, 56, 0.35);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(30, 215, 96, 0.45);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background: var(--surface-elevated);
+  background: var(--hover);
   color: var(--text-primary);
   border: 1px solid var(--border);
   padding: 0.65rem 1.35rem;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   font-weight: 600;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -183,7 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-secondary:hover {
   border-color: var(--primary);
-  background: #FFFFFF;
+  background: var(--surface-elevated);
 }
 
 .btn-danger {
@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   font-weight: 700;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -208,10 +208,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-success {
   background: var(--success);
-  color: #FFFFFF;
+  color: #121212;
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   font-weight: 800;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -223,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-success:hover {
-  opacity: 0.92;
+  background: var(--primary-hover);
 }
 
 /* Input Fields */
@@ -232,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 0.65rem 1rem;
-  border-radius: 0.4rem;
+  border-radius: 2rem;
   font-size: 0.875rem;
   font-family: var(--font-sans);
   outline: none;
@@ -241,7 +241,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .input-field:focus {
   border-color: var(--focus);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+  box-shadow: 0 0 0 2px var(--primary-soft);
 }
 .input-field::placeholder {
   color: var(--text-muted);

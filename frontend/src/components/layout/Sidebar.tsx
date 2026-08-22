@@ -20,37 +20,38 @@ export default function Sidebar() {
     gap: '0.75rem',
     padding: '0.68rem 0.95rem',
     borderRadius: '0.5rem',
-    color: isActive ? '#F4F7FB' : '#94A3B8',
-    background: isActive ? '#111B2E' : 'transparent',
-    borderLeft: isActive ? '3px solid #00D9FF' : '3px solid transparent',
+    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+    background: isActive ? 'var(--bg-surface-hover)' : 'transparent',
+    borderLeft: isActive ? '3px solid var(--primary)' : '3px solid transparent',
     textDecoration: 'none',
     fontWeight: isActive ? 700 : 500,
     fontSize: '0.875rem',
     fontFamily: 'var(--font-heading)',
     transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-    boxShadow: isActive ? '0 0 15px rgba(0, 217, 255, 0.2)' : 'none',
+    boxShadow: isActive ? '0 0 15px var(--primary-glow)' : 'none',
   });
 
   return (
     <div style={{
       width: '265px',
       height: '100vh',
-      background: '#070B14',
-      borderRight: '1px solid #243149',
+      background: 'var(--bg-base)',
+      borderRight: '1px solid var(--border-subtle)',
       display: 'flex',
       flexDirection: 'column',
       flexShrink: 0,
+      transition: 'background-color 0.3s ease, border-color 0.3s ease',
     }}>
       {/* Brand Header */}
       <div style={{ padding: '1.5rem 1.35rem', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-        <div style={{ background: 'linear-gradient(135deg, #00D9FF 0%, #7C5CFF 100%)', padding: '0.55rem', borderRadius: '0.6rem', display: 'flex', boxShadow: '0 0 18px rgba(0, 217, 255, 0.3)' }}>
-          <Activity color="#070B14" size={24} />
+        <div style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent-violet) 100%)', padding: '0.55rem', borderRadius: '0.6rem', display: 'flex', boxShadow: '0 0 18px var(--primary-glow)' }}>
+          <Activity color="#FFFFFF" size={24} />
         </div>
         <div>
           <h1 className="gradient-text" style={{ margin: 0, fontSize: '1.4rem', fontWeight: 900, letterSpacing: '-0.03em' }}>
             Dayflow
           </h1>
-          <div style={{ fontSize: '0.68rem', color: '#00D9FF', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '0.68rem', color: 'var(--primary)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
             Workforce AI
           </div>
         </div>
@@ -74,15 +75,15 @@ export default function Sidebar() {
           <DollarSign size={18} /> Payroll
         </NavLink>
 
-        <div style={{ height: '1px', background: '#243149', margin: '1.1rem 0 0.65rem 0' }} />
-        <div style={{ fontSize: '0.68rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 0.85rem', marginBottom: '0.35rem', fontWeight: 700 }}>
+        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '1.1rem 0 0.65rem 0' }} />
+        <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0 0.85rem', marginBottom: '0.35rem', fontWeight: 700 }}>
           Intelligence Engine
         </div>
 
         <NavLink to="/dashboard" end style={({ isActive }) => navItemStyle(isActive)}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Activity size={18} /> Command Center</div>
-            <span className="animate-live-pulse" style={{ background: '#FF3B6B', color: '#ffffff', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.3rem', fontWeight: 800 }}>LIVE</span>
+            <span className="animate-live-pulse" style={{ background: 'var(--accent-rose)', color: '#ffffff', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.3rem', fontWeight: 800 }}>LIVE</span>
           </div>
         </NavLink>
 
@@ -93,13 +94,13 @@ export default function Sidebar() {
         <NavLink to="/simulator" style={({ isActive }) => navItemStyle(isActive)}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Zap size={18} /> What-If Simulator</div>
-            <span style={{ background: 'linear-gradient(135deg, #00D9FF, #7C5CFF)', color: '#070B14', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.3rem', fontWeight: 800 }}>WOW</span>
+            <span style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent-violet))', color: '#FFFFFF', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.3rem', fontWeight: 800 }}>WOW</span>
           </div>
         </NavLink>
 
         <NavLink to="/copilot" style={({ isActive }) => navItemStyle(isActive)}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Bot size={18} color="#7C5CFF" /> HR Copilot
+            <Bot size={18} color="var(--accent-violet)" /> HR Copilot
           </div>
         </NavLink>
 
@@ -107,7 +108,7 @@ export default function Sidebar() {
           <FileText size={18} /> Decision Traces
         </NavLink>
 
-        <div style={{ height: '1px', background: '#243149', margin: '1.1rem 0 0.65rem 0' }} />
+        <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '1.1rem 0 0.65rem 0' }} />
 
         <NavLink to="/audit" style={({ isActive }) => navItemStyle(isActive)}>
           <Shield size={18} /> Security & Audit
@@ -115,17 +116,17 @@ export default function Sidebar() {
       </div>
 
       {/* User Info */}
-      <div style={{ padding: '1rem 1.25rem', borderTop: '1px solid #243149', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#0D1422' }}>
+      <div style={{ padding: '1rem 1.25rem', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--bg-surface)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #00D9FF, #7C5CFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#070B14', fontWeight: 900, fontSize: '0.85rem' }}>
+          <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), var(--accent-violet))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 900, fontSize: '0.85rem' }}>
             AD
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#F4F7FB' }}>Admin HR</div>
-            <div style={{ fontSize: '0.725rem', color: '#00D9FF', fontWeight: 600 }}>HR Director</div>
+            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Admin HR</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--primary)', fontWeight: 600 }}>HR Director</div>
           </div>
         </div>
-        <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: '#94A3B8', cursor: 'pointer', transition: 'color 0.15s' }} title="Logout" onMouseOver={e => e.currentTarget.style.color = '#FF3B6B'} onMouseOut={e => e.currentTarget.style.color = '#94A3B8'}>
+        <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', transition: 'color 0.15s' }} title="Logout" onMouseOver={e => e.currentTarget.style.color = 'var(--accent-rose)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
           <LogOut size={16} />
         </button>
       </div>

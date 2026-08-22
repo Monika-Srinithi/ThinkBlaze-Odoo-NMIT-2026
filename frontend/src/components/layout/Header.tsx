@@ -1,12 +1,15 @@
-import { Bell, Search, Sparkles } from 'lucide-react';
+import { Bell, Search, Sparkles, Sun, Moon } from 'lucide-react';
+import { useThemeStore } from '../../store/theme';
 
 export const Header = () => {
+  const { theme, toggleTheme } = useThemeStore();
+
   return (
     <header
       style={{
         height: '60px',
-        background: '#0D1422',
-        borderBottom: '1px solid #243149',
+        background: 'var(--bg-surface)',
+        borderBottom: '1px solid var(--border-subtle)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -14,11 +17,12 @@ export const Header = () => {
         position: 'sticky',
         top: 0,
         zIndex: 20,
+        transition: 'background-color 0.3s ease, border-color 0.3s ease',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '400px' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
           <input
             type="text"
             className="input-field"
@@ -29,22 +33,54 @@ export const Header = () => {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0, 217, 255, 0.12)', color: '#00D9FF', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid rgba(0, 217, 255, 0.35)', boxShadow: '0 0 12px rgba(0, 217, 255, 0.2)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0, 217, 255, 0.12)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)', boxShadow: '0 0 12px var(--primary-glow)' }}>
           <Sparkles size={14} className="animate-live-pulse" /> AI Decision Engine Active
         </div>
 
-        <div style={{ fontSize: '0.85rem', color: '#94A3B8', fontWeight: 600 }}>
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
           {new Date().toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
 
+        {/* Light / Dark Mode Toggle */}
+        <button
+          onClick={toggleTheme}
+          style={{
+            background: 'var(--bg-surface-hover)',
+            border: '1px solid var(--border-subtle)',
+            padding: '0.5rem 0.85rem',
+            borderRadius: '2rem',
+            color: 'var(--text-primary)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            fontSize: '0.8rem',
+            fontWeight: 700,
+            fontFamily: 'var(--font-heading)',
+            transition: 'all 0.2s ease',
+          }}
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {theme === 'dark' ? (
+            <>
+              <Sun size={15} color="#F59E0B" /> Light
+            </>
+          ) : (
+            <>
+              <Moon size={15} color="#7C5CFF" /> Dark
+            </>
+          )}
+        </button>
+
+        {/* Notification Bell */}
         <button
           style={{
             position: 'relative',
-            background: '#111B2E',
-            border: '1px solid #243149',
+            background: 'var(--bg-surface-hover)',
+            border: '1px solid var(--border-subtle)',
             padding: '0.5rem',
             borderRadius: '50%',
-            color: '#94A3B8',
+            color: 'var(--text-secondary)',
             cursor: 'pointer',
             transition: 'transform 0.2s',
           }}
@@ -60,9 +96,9 @@ export const Header = () => {
               right: '2px',
               width: '8px',
               height: '8px',
-              background: '#FF3B6B',
+              background: 'var(--accent-rose)',
               borderRadius: '50%',
-              boxShadow: '0 0 8px #FF3B6B',
+              boxShadow: '0 0 8px var(--accent-rose)',
             }}
           />
         </button>

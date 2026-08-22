@@ -1,50 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Awwwards.com Premium Editorial Design System (Studio Paper & Architectural Charcoal) */
-  --bg: #F4F4F0;                     /* Awwwards Warm Studio Paper Canvas */
-  --bg-secondary: #EBEBE6;           /* Awwwards Subtle Darker Paper */
-  --sidebar: #FFFFFF;                /* Pristine White Sidebar with Grid Borders */
+  /* Spotify Obsidian Ash & Neon Green Design System */
+  --bg: #121212;                     /* Iconic Dark Obsidian Slate */
+  --bg-secondary: #181818;           /* Dark Ash Surface */
+  --sidebar: #0A0A0A;                /* Pure Ash Black Sidebar */
 
-  --surface: #FFFFFF;                /* Pure White Cards */
-  --surface-elevated: #F9F9F6;       /* Slightly Off-White Elevated Cards */
-  --card-hover: #F0F0EB;
+  --surface: #181818;                /* Dark Ash Charcoal Card */
+  --surface-elevated: #282828;       /* Elevated Slate Ash Surface */
+  --card-hover: #282828;
 
-  --primary: #111111;                /* Deep Architectural Graphite */
-  --primary-hover: #000000;
-  --primary-glow: rgba(17, 17, 17, 0.1);
-  --primary-soft: rgba(17, 17, 17, 0.05);
+  --primary: #1DB954;                /* Iconic Spotify Electric Green */
+  --primary-hover: #1ED760;          /* High-Vibrancy Neon Green */
+  --primary-glow: rgba(30, 215, 96, 0.3);
+  --primary-soft: rgba(29, 185, 84, 0.15);
 
-  --ai: #111111;
-  --ai-glow: rgba(17, 17, 17, 0.1);
-  --ai-soft: rgba(17, 17, 17, 0.05);
+  --ai: #1DB954;                     /* Intelligence Accent: Spotify Green */
+  --ai-glow: rgba(30, 215, 96, 0.3);
+  --ai-soft: rgba(29, 185, 84, 0.15);
 
-  --secondary-accent: #666660;       /* Warm Charcoal Muted Slate */
+  --secondary-accent: #B3B3B3;       /* Cool Ash Gray */
 
-  /* Semantic Alerts strictly styled to fit the Awwwards Monochrome look */
-  --success: #111111;                /* Solid black for healthy/success badge */
-  --success-soft: #F0F0EB;
+  --success: #1DB954;                /* Spotify Green */
+  --success-soft: rgba(29, 185, 84, 0.15);
 
-  --warning: #C27803;                /* Refined Dark Ochre Gold (Awwwards Gold rating) */
-  --warning-soft: #FDF6E2;
+  --warning: #F59E0B;                /* Electric Amber */
+  --warning-soft: rgba(245, 158, 11, 0.15);
 
-  --danger: #9B1C1C;                 /* Refined Terracotta/Burgundy Crimson */
-  --danger-soft: #FDE8E8;
+  --danger: #FF3B30;                 /* Crimson Red */
+  --danger-soft: rgba(255, 59, 48, 0.15);
 
-  --text-primary: #111111;           /* Deep Architectural Charcoal Text */
-  --text-secondary: #666660;         /* Muted Slate Text */
-  --text-muted: #999990;
+  --text-primary: #FFFFFF;           /* Crisp High-Contrast Pure White */
+  --text-secondary: #B3B3B3;         /* Muted Ash Gray */
+  --text-muted: #727272;
 
-  --border: #E0E0DB;                 /* 1px Precision Grid Lines */
-  --divider: #ECECE6;
+  --border: #282828;                 /* Hairline Ash Charcoal Border */
+  --divider: #282828;
 
-  --input-bg: #FFFFFF;
-  --hover: #ECECE6;
+  --input-bg: #121212;
+  --hover: #282828;
 
-  --focus: #111111;
+  --focus: #1DB954;
 
-  --btn-primary-bg: #111111;
-  --btn-primary-text: #FFFFFF;
+  --btn-primary-bg: #1DB954;
+  --btn-primary-text: #121212;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -64,43 +63,45 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.04em;
-  font-weight: 900;
-  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-weight: 800;
   color: var(--text-primary);
 }
 
-/* Awwwards Grid Cards */
+/* Spotify Ash Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0;                  /* Sharp architectural edges */
-  box-shadow: none;                  /* Zero shadows - flat structural grid */
-  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-panel:hover {
-  background: var(--card-hover);
-  border-color: var(--primary);
+  background: var(--surface-elevated);
+  border-color: rgba(30, 215, 96, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--primary-soft);
 }
 
 .glass-panel-glow {
   background: var(--surface);
-  border: 1.5px solid var(--primary);
-  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+  border-radius: 0.5rem;
 }
 
-/* Accent Text */
+/* Spotify Green Accent Text */
 .gradient-text {
   color: var(--primary);
 }
 
-.highlight-editorial {
+.highlight-green {
   color: var(--primary);
 }
 
@@ -114,12 +115,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
 
-/* Animations */
+/* Keyframe Animations */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -138,41 +140,41 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Awwwards Primary CTA Button (Bold Pill/Sharp Rectangle) */
+/* Spotify Green Primary CTA Button */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
-  border: 1.5px solid var(--primary);
-  padding: 0.7rem 1.4rem;
-  border-radius: 0;                  /* Sharp edges */
+  border: none;
+  padding: 0.65rem 1.35rem;
+  border-radius: 2rem;
   font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.825rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px var(--primary-glow);
 }
 .btn-primary:hover {
-  background: #FFFFFF;
-  color: var(--primary);
+  background: var(--primary-hover);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(30, 215, 96, 0.45);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background: transparent;
+  background: var(--hover);
   color: var(--text-primary);
-  border: 1.5px solid var(--border);
-  padding: 0.7rem 1.4rem;
-  border-radius: 0;
-  font-weight: 800;
+  border: 1px solid var(--border);
+  padding: 0.65rem 1.35rem;
+  border-radius: 2rem;
+  font-weight: 600;
   font-family: var(--font-heading);
-  font-size: 0.825rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -187,13 +189,13 @@ h1, h2, h3, h4, h5, h6 {
 .btn-danger {
   background: var(--danger);
   color: #FFFFFF;
-  border: 1.5px solid var(--danger);
-  padding: 0.7rem 1.4rem;
-  border-radius: 0;
-  font-weight: 800;
+  border: none;
+  padding: 0.65rem 1.35rem;
+  border-radius: 2rem;
+  font-weight: 700;
   font-family: var(--font-heading);
-  font-size: 0.825rem;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -201,20 +203,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-danger:hover {
-  background: transparent;
-  color: var(--danger);
+  opacity: 0.92;
 }
 
 .btn-success {
   background: var(--success);
-  color: #FFFFFF;
-  border: 1.5px solid var(--success);
-  padding: 0.7rem 1.4rem;
-  border-radius: 0;
+  color: #121212;
+  border: none;
+  padding: 0.65rem 1.35rem;
+  border-radius: 2rem;
   font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.825rem;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -222,17 +223,16 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-success:hover {
-  background: transparent;
-  color: var(--success);
+  background: var(--primary-hover);
 }
 
 /* Input Fields */
 .input-field {
-  background: #FFFFFF;
+  background: var(--input-bg);
   border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 0.65rem 1rem;
-  border-radius: 0;
+  border-radius: 2rem;
   font-size: 0.875rem;
   font-family: var(--font-sans);
   outline: none;
@@ -240,7 +240,8 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 .input-field:focus {
-  border-color: var(--primary);
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px var(--primary-soft);
 }
 .input-field::placeholder {
   color: var(--text-muted);
@@ -252,19 +253,18 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.65rem;
-  border-radius: 0;
-  font-size: 0.7rem;
+  border-radius: 0.3rem;
+  font-size: 0.725rem;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-family: var(--font-heading);
-  border: 1px solid var(--border);
 }
 
 .badge-success {
   background: var(--success-soft);
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  color: var(--success);
+  border: 1px solid var(--success);
 }
 
 .badge-warning {
@@ -280,13 +280,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-info {
-  background: var(--surface-elevated);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .badge-ai {
-  background: var(--primary);
-  color: #FFFFFF;
+  background: var(--primary-soft);
+  color: var(--primary);
   border: 1px solid var(--primary);
 }

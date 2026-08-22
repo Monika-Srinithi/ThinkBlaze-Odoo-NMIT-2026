@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Users, Calendar, Zap, ArrowRight, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, Users, Calendar, Zap, ArrowRight, ShieldAlert, Activity } from 'lucide-react';
 import { apiFetch } from '../../api/client';
 
 const FALLBACK_HEALTH = {
@@ -59,131 +59,89 @@ export default function HRCommandCenter() {
   const teamsAtRisk = teams.filter((t: any) => t.risk_level === 'critical' || t.risk_level === 'high').length;
   const onLeave = teams.reduce((acc: number, t: any) => acc + (t.employees_on_leave || 0), 0);
 
-  // Awwwards Style Dimensions Scorecard
-  const awwwardsDimensions = [
-    { title: 'Attendance Stability', score: 7.5 },
-    { title: 'Leave Coverage Capacity', score: 6.8 },
-    { title: 'Operational Capacity Slack', score: 7.0 },
-    { title: 'System Policy Adherence', score: 8.2 },
-  ];
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', paddingBottom: '3rem' }}>
-      {/* Editorial Header Bar */}
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'flex-end', 
-        justifyContent: 'space-between', 
-        flexWrap: 'wrap', 
-        gap: '1.5rem',
-        borderBottom: '2px solid var(--primary)',
-        paddingBottom: '1.5rem'
-      }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Header Bar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-secondary)' }}>
-            Workforce AI Evaluation
-          </span>
-          <h1 style={{ margin: '0.25rem 0 0 0', fontSize: '3.2rem', fontWeight: 900, fontFamily: 'var(--font-heading)', letterSpacing: '-0.05em', lineHeight: 1.0 }}>
-            HR Command Center
+          <h1 style={{ margin: 0, fontSize: '2.4rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.04em' }}>
+            <Activity color="var(--primary)" size={34} /> HR Command Center
           </h1>
+          <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+            Real-time workforce health monitoring, operational risk detection, and pending action simulation.
+          </p>
         </div>
-        <div style={{ 
-          fontSize: '0.75rem', 
-          fontWeight: 900,
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-          color: '#FFFFFF', 
-          background: 'var(--primary)', 
-          padding: '0.6rem 1.2rem', 
-          borderRadius: '0' 
-        }}>
-          System Score: {(score / 10).toFixed(2)} of 10
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', background: 'var(--surface-elevated)', padding: '0.5rem 1rem', borderRadius: '0.375rem', border: '1px solid var(--border)' }}>
+          Live · {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </div>
       </div>
 
-      {/* Awwwards Scoreboard Card & Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-        
-        {/* Large Awwwards Score Panel */}
-        <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '2.5px solid var(--primary)' }}>
-          <div>
-            <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1.5rem', fontWeight: 900 }}>
-              Workforce Health Rating
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
-              <span style={{ fontSize: '5.5rem', fontWeight: 900, lineHeight: 1.0, letterSpacing: '-0.05em', color: 'var(--primary)' }}>
-                {(score / 10).toFixed(1)}
-              </span>
-              <span style={{ fontSize: '1.5rem', color: 'var(--text-secondary)', fontWeight: 600 }}>/10</span>
+      {/* Top Stats Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+        {/* Animated Health Gauge */}
+        <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <div style={{ position: 'relative', width: '84px', height: '84px', flexShrink: 0 }}>
+            <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--border)" strokeWidth="12" />
+              <circle
+                cx="50"
+                cy="50"
+                r="40"
+                fill="transparent"
+                stroke="var(--primary)"
+                strokeWidth="12"
+                strokeDasharray={`${(score / 100) * 251.2} 251.2`}
+                style={{ transition: 'stroke-dasharray 1.2s ease-in-out' }}
+              />
+            </svg>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
+              {score.toFixed(1)}
             </div>
           </div>
           <div>
-            <div style={{ fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: gaugeColor, marginBottom: '0.25rem' }}>
-              Evaluation Status
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem', fontWeight: 800 }}>
+              Workforce Health
             </div>
-            <div style={{ fontWeight: 900, fontSize: '1.4rem', textTransform: 'uppercase', letterSpacing: '-0.03em' }}>
-              {score >= 85 ? 'Excellent Health' : score >= 70 ? 'Good Standing' : score >= 55 ? 'Needs Attention' : 'Critical Threat'}
+            <div style={{ fontWeight: 900, fontSize: '1.15rem', color: gaugeColor, fontFamily: 'var(--font-heading)' }}>
+              {score >= 85 ? 'Excellent' : score >= 70 ? 'Good' : score >= 55 ? 'Needs Attention' : 'Critical Risk'}
             </div>
           </div>
         </div>
 
-        {/* Dimension Ratings Grid */}
-        <div className="glass-panel" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.5rem', fontWeight: 900 }}>
-            Operational Breakdown
+        {[
+          { label: 'Teams at Risk', value: teamsAtRisk, icon: AlertTriangle, color: 'var(--danger)', bg: 'var(--danger-soft)' },
+          { label: 'Pending Actions', value: pendingLeaves.length, icon: Zap, color: 'var(--warning)', bg: 'var(--warning-soft)' },
+          { label: 'On Leave Today', value: onLeave, icon: Users, color: 'var(--primary)', bg: 'var(--primary-soft)' },
+        ].map((m, i) => (
+          <div key={i} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem', fontWeight: 600 }}>{m.label}</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 900, fontFamily: 'var(--font-heading)' }}>{m.value}</div>
+            </div>
+            <div style={{ background: m.bg, padding: '0.75rem', borderRadius: '0.375rem', color: m.color }}>
+              <m.icon size={24} />
+            </div>
           </div>
-          {awwwardsDimensions.map((dim, index) => (
-            <div key={index} style={{ borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{dim.title}</span>
-                <span style={{ fontSize: '0.9rem', fontWeight: 900 }}>{dim.score}</span>
-              </div>
-              <div style={{ width: '100%', height: '4px', background: 'var(--divider)', position: 'relative' }}>
-                <div style={{ width: `${dim.score * 10}%`, height: '100%', background: 'var(--primary)' }} />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Monochromatic Mini Stats */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {[
-            { label: 'Risk Incident Teams', value: teamsAtRisk, icon: AlertTriangle, desc: 'Requires instant mitigation' },
-            { label: 'Pending AI Actions', value: pendingLeaves.length, icon: Zap, desc: 'Requires simulation run' },
-            { label: 'Total Active Absences', value: onLeave, icon: Users, desc: 'Leaves approved today' },
-          ].map((m, i) => (
-            <div key={i} className="glass-panel" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 900, marginBottom: '0.15rem' }}>{m.label}</div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 900 }}>{m.value}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>{m.desc}</div>
-              </div>
-              <div style={{ border: '1.5px solid var(--border)', padding: '0.6rem', color: 'var(--primary)' }}>
-                <m.icon size={20} />
-              </div>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
 
       {/* Main 2-Column Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1.2fr', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 
           {/* Action Center — Pending Leaves */}
-          <div className="glass-panel" style={{ padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1.5px solid var(--primary)', paddingBottom: '1rem' }}>
-              <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem', letterSpacing: '-0.02em' }}>
-                <Zap size={20} /> Action Evaluation Center
+          <div className="glass-panel" style={{ padding: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Zap size={22} color="var(--warning)" /> Action Center
+                <span className="badge badge-warning" style={{ marginLeft: '0.5rem' }}>
+                  {pendingLeaves.length} Pending Actions
+                </span>
               </h2>
-              <span style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', background: 'var(--primary)', color: '#FFFFFF', padding: '0.25rem 0.65rem' }}>
-                {pendingLeaves.length} Queued
-              </span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {pendingLeaves.map((leave: any) => {
-                const urgencyColor = leave.urgency === 'critical' ? 'var(--danger)' : 'var(--warning)';
                 return (
                   <div
                     key={leave.id}
@@ -193,36 +151,37 @@ export default function HRCommandCenter() {
                       justifyContent: 'space-between',
                       padding: '1.25rem',
                       background: 'var(--surface-elevated)',
+                      borderRadius: '0.375rem',
                       border: '1px solid var(--border)',
                       transition: 'all 0.2s',
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 900, fontSize: '1.05rem', marginBottom: '0.35rem' }}>
+                      <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                         {leave.employee_name}
-                        <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', fontWeight: 500 }}> · {leave.designation}</span>
+                        <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 400 }}> · {leave.designation}</span>
                       </div>
-                      <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                           <Calendar size={13} /> {leave.start_date} → {leave.end_date} ({leave.total_days || 5} days)
                         </span>
                         <span>·</span>
-                        <span style={{ color: urgencyColor, fontWeight: 700 }}>
+                        <span style={{ color: 'var(--danger)', fontWeight: 600 }}>
                           {leave.team} capacity drops to {leave.simulated_capacity}% if approved
                         </span>
                       </div>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-                      <span className="badge badge-info" style={{ borderColor: urgencyColor, color: urgencyColor }}>
+                      <span className={`badge ${leave.urgency === 'critical' ? 'badge-danger' : 'badge-warning'}`}>
                         {leave.urgency}
                       </span>
                       <button
                         className="btn-primary"
-                        style={{ padding: '0.55rem 1rem', fontSize: '0.8rem' }}
+                        style={{ padding: '0.55rem 1rem', fontSize: '0.85rem' }}
                         onClick={() => navigate(`/simulator`)}
                       >
-                        Simulate <ArrowRight size={14} />
+                        Simulate <ArrowRight size={15} />
                       </button>
                     </div>
                   </div>
@@ -232,8 +191,8 @@ export default function HRCommandCenter() {
           </div>
 
           {/* Team Capacity Overview */}
-          <div className="glass-panel" style={{ padding: '2rem' }}>
-            <h2 style={{ margin: '0 0 1.5rem 0', fontSize: '1.2rem', fontWeight: 900, borderBottom: '1.5px solid var(--primary)', paddingBottom: '1rem' }}>Team Allocation Overview</h2>
+          <div className="glass-panel" style={{ padding: '1.5rem' }}>
+            <h2 style={{ margin: '0 0 1.5rem 0', fontSize: '1.3rem', fontWeight: 900 }}>Team Capacity Overview</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {teams.map((team: any, i: number) => {
                 const cap = team.capacity_pct || 0;
@@ -243,18 +202,19 @@ export default function HRCommandCenter() {
                 return (
                   <div key={i}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 900, fontSize: '0.85rem', textTransform: 'uppercase' }}>{team.name}</span>
+                      <span style={{ fontWeight: 800, fontSize: '0.95rem' }}>{team.name}</span>
                       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', fontSize: '0.85rem' }}>
                         <span className={`badge ${riskBadge}`}>{team.risk_level}</span>
-                        <span style={{ fontWeight: 900, color: barColor, fontSize: '0.95rem' }}>{cap}%</span>
+                        <span style={{ fontWeight: 900, color: barColor, fontFamily: 'var(--font-heading)', fontSize: '1rem' }}>{cap}%</span>
                       </div>
                     </div>
-                    <div style={{ width: '100%', height: '4px', background: 'var(--divider)', position: 'relative' }}>
+                    <div style={{ width: '100%', height: '8px', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
                       <div
                         style={{
                           width: `${cap}%`,
                           height: '100%',
                           background: barColor,
+                          borderRadius: '4px',
                           transition: 'width 1s ease-in-out',
                         }}
                       />
@@ -268,30 +228,26 @@ export default function HRCommandCenter() {
 
         {/* Right Panel: Risk Alerts & Risk Distribution */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          
           {/* Risk Alerts Card */}
-          <div className="glass-panel" style={{ padding: '2rem' }}>
-            <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.1rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1.5px solid var(--primary)', paddingBottom: '1rem' }}>
-              <ShieldAlert size={18} /> Operational Alerts
+          <div className="glass-panel" style={{ padding: '1.5rem', flex: 1 }}>
+            <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <ShieldAlert size={20} color="var(--danger)" /> Top Operational Risks
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {alerts.map((a: any, i: number) => {
                 const borderColor = a.severity === 'critical' ? 'var(--danger)' : a.severity === 'high' ? 'var(--secondary-accent)' : 'var(--warning)';
-                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : 'var(--surface-elevated)';
+                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : a.severity === 'high' ? 'rgba(255, 138, 61, 0.12)' : 'var(--warning-soft)';
                 return (
                   <div
                     key={i}
                     style={{
-                      padding: '1.1rem',
-                      border: `1px solid var(--border)`,
+                      padding: '1rem',
+                      borderRadius: '0.375rem',
                       borderLeft: `4px solid ${borderColor}`,
                       background: bg,
-                      fontSize: '0.8rem',
+                      fontSize: '0.875rem',
                       lineHeight: 1.5,
-                      fontWeight: 800,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.02em',
-                      color: a.severity === 'critical' ? 'var(--danger)' : 'var(--text-primary)'
+                      fontWeight: 600,
                     }}
                   >
                     {a.message}
@@ -301,32 +257,20 @@ export default function HRCommandCenter() {
             </div>
           </div>
 
-          {/* Risk Distribution Matrix */}
+          {/* Risk Distribution */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
-            <h3 style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Risk Distribution Matrix</h3>
-            <div style={{ display: 'flex', height: '16px', width: '100%', gap: '3px' }}>
-              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)' }} />
-              <div style={{ flex: riskDist.high || 1, background: 'var(--secondary-accent)' }} />
-              <div style={{ flex: riskDist.medium || 1, background: 'var(--warning)' }} />
-              <div style={{ flex: riskDist.low || 2, background: 'var(--primary)' }} />
+            <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 800 }}>Risk Distribution Matrix</h3>
+            <div style={{ display: 'flex', height: '20px', borderRadius: '4px', overflow: 'hidden', width: '100%', gap: '3px' }}>
+              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)', borderRadius: '2px' }} title={`Critical: ${riskDist.critical}`} />
+              <div style={{ flex: riskDist.high || 1, background: 'var(--secondary-accent)', borderRadius: '2px' }} title={`High: ${riskDist.high}`} />
+              <div style={{ flex: riskDist.medium || 1, background: 'var(--warning)', borderRadius: '2px' }} title={`Medium: ${riskDist.medium}`} />
+              <div style={{ flex: riskDist.low || 2, background: 'var(--primary)', borderRadius: '2px' }} title={`Normal: ${riskDist.low}`} />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginTop: '1rem', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--divider)', paddingBottom: '0.25rem' }}>
-                <span>Critical Risk</span>
-                <span style={{ color: 'var(--danger)' }}>{riskDist.critical || 1} Team</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--divider)', paddingBottom: '0.25rem' }}>
-                <span>High Alert</span>
-                <span style={{ color: 'var(--secondary-accent)' }}>{riskDist.high || 1} Team</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--divider)', paddingBottom: '0.25rem' }}>
-                <span>Medium Alert</span>
-                <span style={{ color: 'var(--warning)' }}>{riskDist.medium || 1} Team</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>Normal Standing</span>
-                <span>{riskDist.low || 2} Teams</span>
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.85rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+              <span style={{ color: 'var(--danger)' }}>🔴 {riskDist.critical || 1} Critical</span>
+              <span style={{ color: 'var(--secondary-accent)' }}>🟠 {riskDist.high || 1} High</span>
+              <span style={{ color: 'var(--warning)' }}>🟡 {riskDist.medium || 1} Med</span>
+              <span style={{ color: 'var(--primary)' }}>🟢 {riskDist.low || 2} Normal</span>
             </div>
           </div>
         </div>

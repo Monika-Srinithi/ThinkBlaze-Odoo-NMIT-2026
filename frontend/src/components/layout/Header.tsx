@@ -9,7 +9,7 @@ export const Header = () => {
       style={{
         height: '60px',
         background: 'var(--surface)',
-        borderBottom: '1.5px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -27,18 +27,18 @@ export const Header = () => {
             type="text"
             className="input-field"
             placeholder="Search Dayflow workforce intelligence, team risk, employees..."
-            style={{ paddingLeft: '2.5rem', borderRadius: '0', fontSize: '0.85rem' }}
+            style={{ paddingLeft: '2.5rem', borderRadius: '2rem', fontSize: '0.85rem' }}
           />
         </div>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
         {/* AI Decision Engine Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--primary-soft)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '0', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', border: '1px solid var(--primary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--primary-soft)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '0.375rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)' }}>
           <Sparkles size={14} className="animate-live-pulse" /> AI Decision Engine Active
         </div>
 
-        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
           {new Date().toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
 
@@ -49,16 +49,14 @@ export const Header = () => {
             background: 'var(--hover)',
             border: '1px solid var(--border)',
             padding: '0.45rem 0.85rem',
-            borderRadius: '0',
+            borderRadius: '0.375rem',
             color: 'var(--text-primary)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem',
-            fontSize: '0.75rem',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '0.04em',
+            fontSize: '0.8rem',
+            fontWeight: 700,
             fontFamily: 'var(--font-heading)',
             transition: 'all 0.2s ease',
           }}
@@ -66,11 +64,11 @@ export const Header = () => {
         >
           {theme === 'dark' ? (
             <>
-              <Sun size={14} color="var(--warning)" /> Light
+              <Sun size={15} color="var(--warning)" /> Light
             </>
           ) : (
             <>
-              <Moon size={14} color="var(--primary)" /> Dark
+              <Moon size={15} color="var(--primary)" /> Dark
             </>
           )}
         </button>
@@ -82,7 +80,7 @@ export const Header = () => {
             background: 'var(--hover)',
             border: '1px solid var(--border)',
             padding: '0.5rem',
-            borderRadius: '0',
+            borderRadius: '0.375rem',
             color: 'var(--text-secondary)',
             cursor: 'pointer',
             transition: 'transform 0.2s',

@@ -1,48 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Awwwards Site of the Day "Editorial Dual-Tone" (Studio Off-White x Obsidian Black) */
-  --bg: #EAEAEA;                     /* Studio Minimalist Off-White Canvas */
-  --bg-secondary: #F4F4F4;           /* Soft Studio Light Surface */
-  --sidebar: #0C0C0C;                /* Obsidian Architectural Black Sidebar */
+  /* Exact Colors Extracted from Reference Screenshot */
+  --bg: #EBEBEB;                     /* Exact Platinum Light Grey Canvas from Image */
+  --bg-secondary: #F3F3F3;           /* Soft Light Grey Surface */
+  --sidebar: #080808;                /* Exact Pitch Black from Image Bottom */
 
   --surface: #FFFFFF;                /* Pristine White Card Surface */
-  --surface-elevated: #F2F2F2;       /* Soft Grey Elevated Card */
-  --card-hover: #F7F7F7;
+  --surface-elevated: #F7F7F7;       /* Elevated Card Surface */
+  --card-hover: #F2F2F2;
 
-  --primary: #111111;                /* Bold Architectural Obsidian Charcoal */
-  --primary-hover: #2B2B2B;
-  --primary-glow: rgba(17, 17, 17, 0.15);
-  --primary-soft: rgba(17, 17, 17, 0.08);
+  --primary: #1E1E1E;                /* Exact Bold Charcoal Black from Image Text */
+  --primary-hover: #333333;
+  --primary-glow: rgba(30, 30, 30, 0.15);
+  --primary-soft: rgba(30, 30, 30, 0.08);
 
-  --ai: #111111;
-  --ai-glow: rgba(17, 17, 17, 0.15);
-  --ai-soft: rgba(17, 17, 17, 0.08);
+  --ai: #1E1E1E;
+  --ai-glow: rgba(30, 30, 30, 0.15);
+  --ai-soft: rgba(30, 30, 30, 0.08);
 
-  --secondary-accent: #555555;       /* Muted Editorial Slate */
+  --secondary-accent: #555555;       /* Muted Editorial Gray */
 
-  --success: #111111;                /* Architectural Dark */
-  --success-soft: rgba(17, 17, 17, 0.08);
+  --success: #1E1E1E;                /* Charcoal Black */
+  --success-soft: rgba(30, 30, 30, 0.08);
 
-  --warning: #111111;                /* Architectural Dark */
-  --warning-soft: rgba(17, 17, 17, 0.08);
+  --warning: #1E1E1E;                /* Charcoal Black */
+  --warning-soft: rgba(30, 30, 30, 0.08);
 
-  --danger: #111111;                 /* Architectural Dark */
-  --danger-soft: rgba(17, 17, 17, 0.08);
+  --danger: #1E1E1E;                 /* Charcoal Black */
+  --danger-soft: rgba(30, 30, 30, 0.08);
 
-  --text-primary: #111111;           /* Deep Architectural Charcoal Text */
-  --text-secondary: #555555;         /* Muted Editorial Slate Text */
+  --text-primary: #1E1E1E;           /* Exact Deep Charcoal Text from Image */
+  --text-secondary: #555555;         /* Muted Slate Text */
   --text-muted: #888888;
 
-  --border: #D1D1D1;                 /* Precision Hairline Divider */
+  --border: #D5D5D5;                 /* Hairline Divider */
   --divider: #E0E0E0;
 
   --input-bg: #FFFFFF;
   --hover: #F0F0F0;
 
-  --focus: #111111;
+  --focus: #1E1E1E;
 
-  --btn-primary-bg: #111111;
+  --btn-primary-bg: #1E1E1E;
   --btn-primary-text: #FFFFFF;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* Editorial Glass Panel */
+/* Image-Matched Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .glass-panel:hover {
   background: var(--card-hover);
-  border-color: #111111;
+  border-color: #1E1E1E;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
@@ -96,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.4rem;
 }
 
-/* Editorial Accent Text */
+/* Accent Text */
 .gradient-text {
   color: var(--primary);
 }
@@ -140,7 +140,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Editorial Primary CTA Button */
+/* Primary CTA Button */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
@@ -187,7 +187,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-danger {
-  background: #111111;
+  background: #1E1E1E;
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.35rem;
@@ -207,7 +207,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-success {
-  background: #111111;
+  background: #1E1E1E;
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.35rem;
@@ -240,8 +240,8 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 .input-field:focus {
-  border-color: #111111;
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
+  border-color: #1E1E1E;
+  box-shadow: 0 0 0 2px rgba(30, 30, 30, 0.1);
 }
 .input-field::placeholder {
   color: var(--text-muted);
@@ -262,31 +262,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-success {
-  background: #EAEAEA;
-  color: #111111;
-  border: 1px solid #111111;
+  background: #EBEBEB;
+  color: #1E1E1E;
+  border: 1px solid #1E1E1E;
 }
 
 .badge-warning {
-  background: #EAEAEA;
-  color: #111111;
-  border: 1px solid #111111;
+  background: #EBEBEB;
+  color: #1E1E1E;
+  border: 1px solid #1E1E1E;
 }
 
 .badge-danger {
-  background: #111111;
+  background: #1E1E1E;
   color: #FFFFFF;
-  border: 1px solid #111111;
+  border: 1px solid #1E1E1E;
 }
 
 .badge-info {
-  background: #EAEAEA;
-  color: #111111;
-  border: 1px solid #D1D1D1;
+  background: #EBEBEB;
+  color: #1E1E1E;
+  border: 1px solid #D5D5D5;
 }
 
 .badge-ai {
-  background: #111111;
+  background: #1E1E1E;
   color: #FFFFFF;
-  border: 1px solid #111111;
+  border: 1px solid #1E1E1E;
 }

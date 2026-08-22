@@ -1,11 +1,11 @@
-import { Bell, Search, Sparkles } from 'lucide-react';
+import { Bell, Search, ShieldCheck } from 'lucide-react';
 
 export const Header = () => {
   return (
     <header
       style={{
-        height: '64px',
-        background: 'rgba(10, 12, 20, 0.75)',
+        height: '60px',
+        background: 'rgba(14, 18, 30, 0.75)',
         backdropFilter: 'blur(16px)',
         borderBottom: '1px solid var(--border-subtle)',
         display: 'flex',
@@ -19,48 +19,48 @@ export const Header = () => {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '380px' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-          <Search size={16} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <Search size={15} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
           <input
             type="text"
             className="input-field"
-            placeholder="Search Dayflow intelligence, employees, team risks..."
-            style={{ paddingLeft: '2.5rem', borderRadius: '2rem', fontSize: '0.85rem' }}
+            placeholder="Search Dayflow intelligence, employees, team risk..."
+            style={{ paddingLeft: '2.4rem', borderRadius: '2rem', fontSize: '0.825rem' }}
           />
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(16,185,129,0.1)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 700, border: '1px solid rgba(16,185,129,0.3)' }}>
-          <Sparkles size={14} /> AI Decision Engine Active
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(99,102,241,0.1)', color: 'var(--primary)', padding: '0.3rem 0.75rem', borderRadius: '2rem', fontSize: '0.775rem', fontWeight: 600, border: '1px solid rgba(99,102,241,0.25)' }}>
+          <ShieldCheck size={14} /> AI Decision Engine Active
         </div>
 
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+        <div style={{ fontSize: '0.825rem', color: 'var(--text-secondary)' }}>
           {new Date().toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
         </div>
 
         <button
           style={{
             position: 'relative',
-            background: 'rgba(255,255,255,0.05)',
+            background: 'rgba(255,255,255,0.04)',
             border: '1px solid var(--border-subtle)',
-            padding: '0.5rem',
+            padding: '0.45rem',
             borderRadius: '50%',
             color: 'var(--text-secondary)',
             cursor: 'pointer',
           }}
           title="Notifications"
         >
-          <Bell size={18} />
+          <Bell size={16} />
           <span
             style={{
               position: 'absolute',
               top: '2px',
               right: '2px',
-              width: '8px',
-              height: '8px',
+              width: '7px',
+              height: '7px',
               background: 'var(--accent-rose)',
               borderRadius: '50%',
-              boxShadow: '0 0 8px var(--accent-rose)',
+              boxShadow: '0 0 6px var(--accent-rose)',
             }}
           />
         </button>

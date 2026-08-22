@@ -1,63 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"] {
-  /* Exact User-Specified Plum & Electric Coral Palette */
-  --bg: #0B0A10;                     /* Dark background: Midnight */
-  --sidebar: #0B0A10;
+  /* Award-Winning Bioluminescent Dark Opal & Digital Peach Palette */
+  --bg: #050C14;                     /* Midnight Obsidian Teal Canvas */
+  --sidebar: #050C14;
 
-  --surface: #15121D;                /* Card: Plum Black */
-  --surface-elevated: #1F1B2B;       /* Elevated Card Surface */
+  --surface: #0B1724;                /* Opal Slate Card Surface */
+  --surface-elevated: #112233;       /* Elevated Luminous Slate */
 
-  --primary: #FF4F7B;                /* Main accent: Electric Coral */
-  --primary-glow: rgba(255, 79, 123, 0.35);
-  --primary-soft: rgba(255, 79, 123, 0.15);
+  --primary: #FF6B4A;                /* Radiant Digital Peach Accent */
+  --primary-glow: rgba(255, 107, 74, 0.35);
+  --primary-soft: rgba(255, 107, 74, 0.14);
 
-  --ai: #6D28D9;                     /* Primary brand: Deep Plum */
-  --ai-glow: rgba(109, 40, 217, 0.35);
-  --ai-soft: rgba(109, 40, 217, 0.15);
+  --ai: #00F5D4;                     /* Bioluminescent Mint Cyber Emerald */
+  --ai-glow: rgba(0, 245, 212, 0.35);
+  --ai-soft: rgba(0, 245, 212, 0.14);
 
-  --success: #34D399;                /* Success: Emerald */
-  --success-soft: rgba(52, 211, 153, 0.15);
+  --success: #00E699;                /* Neon Mint Green */
+  --success-soft: rgba(0, 230, 153, 0.14);
 
-  --warning: #FFB547;                /* Secondary accent: Warm Amber */
-  --warning-soft: rgba(255, 181, 71, 0.15);
+  --warning: #FFC837;                /* Sunburst Gold Amber */
+  --warning-soft: rgba(255, 200, 55, 0.14);
 
-  --danger: #FF5C5C;                 /* Error: Coral Red */
-  --danger-soft: rgba(255, 92, 92, 0.15);
+  --danger: #FF2E63;                 /* Laser Crimson Red */
+  --danger-soft: rgba(255, 46, 99, 0.14);
 
-  --text-primary: #F8F7FC;           /* Primary text: Soft White */
-  --text-secondary: #A9A3B8;         /* Secondary text: Muted Lavender */
-  --text-muted: #847D93;
+  --text-primary: #F4F8FA;           /* Pure Opal Snow Text */
+  --text-secondary: #8EA5B4;         /* Cool Sea-Glass Gray */
+  --text-muted: #5C7485;
 
-  --border: #292333;                 /* Border: Subtle Plum */
-  --divider: #1D1826;
+  --border: #1A2D3D;                 /* Hairline Teal Slate Border */
+  --divider: #0F2030;
 
-  --input-bg: #100D18;
-  --hover: #221C2D;
+  --input-bg: #07121E;
+  --hover: #14283A;
 
-  --focus: #FF4F7B;
+  --focus: #FF6B4A;
 
-  --btn-primary-text: #FFFFFF;
+  --btn-primary-text: #050C14;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
 [data-theme="light"] {
-  /* Light Mode complement */
-  --bg: #F8F7FC;
+  /* Luminous Sea-Glass Light Theme */
+  --bg: #F0F6F9;
   --sidebar: #FFFFFF;
 
   --surface: #FFFFFF;
-  --surface-elevated: #F1EFF8;
+  --surface-elevated: #E5F0F5;
 
-  --primary: #FF4F7B;
-  --primary-glow: rgba(255, 79, 123, 0.2);
-  --primary-soft: rgba(255, 79, 123, 0.1);
+  --primary: #E64A2E;
+  --primary-glow: rgba(230, 74, 46, 0.2);
+  --primary-soft: rgba(230, 74, 46, 0.1);
 
-  --ai: #6D28D9;
-  --ai-glow: rgba(109, 40, 217, 0.2);
-  --ai-soft: rgba(109, 40, 217, 0.1);
+  --ai: #00A896;
+  --ai-glow: rgba(0, 168, 150, 0.2);
+  --ai-soft: rgba(0, 168, 150, 0.1);
 
   --success: #059669;
   --success-soft: rgba(5, 150, 105, 0.1);
@@ -65,20 +65,20 @@
   --warning: #D97706;
   --warning-soft: rgba(217, 119, 6, 0.1);
 
-  --danger: #FF5C5C;
-  --danger-soft: rgba(255, 92, 92, 0.1);
+  --danger: #E11D48;
+  --danger-soft: rgba(225, 29, 72, 0.1);
 
-  --text-primary: #0B0A10;
-  --text-secondary: #5C556B;
-  --text-muted: #847D93;
+  --text-primary: #0A1926;
+  --text-secondary: #405768;
+  --text-muted: #6B8394;
 
-  --border: #E5E2EE;
-  --divider: #E5E2EE;
+  --border: #D1E0E8;
+  --divider: #D1E0E8;
 
-  --input-bg: #F8F7FC;
-  --hover: #F1EFF8;
+  --input-bg: #F0F6F9;
+  --hover: #E5F0F5;
 
-  --focus: #FF4F7B;
+  --focus: #E64A2E;
 
   --btn-primary-text: #FFFFFF;
 }
@@ -92,8 +92,8 @@
 body {
   background-color: var(--bg);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(109, 40, 217, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(255, 79, 123, 0.08) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 107, 74, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 245, 212, 0.06) 0px, transparent 50%);
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -109,20 +109,20 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Glass Panel with Plum Black Surface */
+/* Fancy Bioluminescent Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 0.85rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .glass-panel:hover {
   background: var(--surface-elevated);
-  border-color: rgba(255, 79, 123, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-soft);
+  border-color: rgba(255, 107, 74, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-soft);
 }
 
 .glass-panel-glow {
@@ -132,15 +132,15 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.85rem;
 }
 
-/* Gradient Text for Branding */
+/* Stunning Gradient text for AI & Brand */
 .gradient-text {
-  background: linear-gradient(135deg, #FF4F7B 0%, #6D28D9 100%);
+  background: linear-gradient(135deg, #FF6B4A 0%, #FFC837 50%, #00F5D4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-emerald {
-  background: linear-gradient(135deg, #34D399 0%, #FF4F7B 100%);
+  background: linear-gradient(135deg, #00E699 0%, #00F5D4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -180,14 +180,14 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Buttons */
+/* Fancy Buttons */
 .btn-primary {
-  background: linear-gradient(135deg, #FF4F7B 0%, #e03a64 100%);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, #FF6B4A 0%, #FF8800 100%);
+  color: #050C14;
   border: none;
   padding: 0.65rem 1.35rem;
   border-radius: 0.6rem;
-  font-weight: 700;
+  font-weight: 800;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: -0.01em;
@@ -196,11 +196,11 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px var(--primary-glow);
+  box-shadow: 0 4px 20px var(--primary-glow);
 }
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(255, 79, 123, 0.45);
+  box-shadow: 0 8px 28px rgba(255, 107, 74, 0.55);
 }
 
 .btn-secondary {
@@ -226,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, #FF5C5C 0%, #d93d3d 100%);
+  background: linear-gradient(135deg, #FF2E63 0%, #d90429 100%);
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.35rem;
@@ -244,12 +244,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-danger:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 92, 92, 0.45);
+  box-shadow: 0 8px 25px rgba(255, 46, 99, 0.45);
 }
 
 .btn-success {
-  background: linear-gradient(135deg, #34D399 0%, #10b981 100%);
-  color: #0B0A10;
+  background: linear-gradient(135deg, #00E699 0%, #00f5d4 100%);
+  color: #050C14;
   border: none;
   padding: 0.65rem 1.35rem;
   border-radius: 0.6rem;
@@ -266,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-success:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(52, 211, 153, 0.45);
+  box-shadow: 0 8px 25px rgba(0, 230, 153, 0.45);
 }
 
 /* Input Fields */
@@ -307,29 +307,29 @@ h1, h2, h3, h4, h5, h6 {
 .badge-success {
   background: var(--success-soft);
   color: var(--success);
-  border: 1px solid rgba(52, 211, 153, 0.4);
+  border: 1px solid rgba(0, 230, 153, 0.4);
 }
 
 .badge-warning {
   background: var(--warning-soft);
   color: var(--warning);
-  border: 1px solid rgba(255, 181, 71, 0.4);
+  border: 1px solid rgba(255, 200, 55, 0.4);
 }
 
 .badge-danger {
   background: var(--danger-soft);
   color: var(--danger);
-  border: 1px solid rgba(255, 92, 92, 0.4);
+  border: 1px solid rgba(255, 46, 99, 0.4);
 }
 
 .badge-info {
   background: var(--primary-soft);
   color: var(--primary);
-  border: 1px solid rgba(255, 79, 123, 0.4);
+  border: 1px solid rgba(255, 107, 74, 0.4);
 }
 
 .badge-ai {
   background: var(--ai-soft);
   color: var(--ai);
-  border: 1px solid rgba(109, 40, 217, 0.4);
+  border: 1px solid rgba(0, 245, 212, 0.4);
 }

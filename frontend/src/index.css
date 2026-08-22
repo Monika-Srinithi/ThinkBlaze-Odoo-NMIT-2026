@@ -1,49 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Refined Ash & Slate Grey Palette with Electric Green Accents */
-  --bg: #141619;                     /* Deep Ash Charcoal Canvas */
-  --bg-secondary: #1B1E22;           /* Mid Ash Slate Surface */
-  --sidebar: #0F1113;                /* Dark Ash Obsidian Sidebar */
+  /* Bespoke Deep Sapphire Navy & Electric Cyan Palette (No Pure Black, No Standard Red/Green) */
+  --bg: #0E1726;                     /* Deep Sapphire Navy Canvas (NOT BLACK) */
+  --bg-secondary: #172235;           /* Rich Navy Slate Surface */
+  --sidebar: #0B111E;                /* Midnight Navy Sidebar */
 
-  --surface: #1B1E22;                /* Mid Ash Slate Card */
-  --surface-elevated: #25292E;       /* Elevated Ash Slate Card */
-  --card-hover: #25292E;
+  --surface: #172235;                /* Dark Navy Slate Card */
+  --surface-elevated: #1E2C44;       /* Elevated Cobalt Slate Card */
+  --card-hover: #1E2C44;
 
-  --primary: #1DB954;                /* Iconic Spotify Electric Green */
-  --primary-hover: #1ED760;          /* High-Vibrancy Neon Green */
-  --primary-glow: rgba(30, 215, 96, 0.3);
-  --primary-soft: rgba(29, 185, 84, 0.15);
+  --primary: #00D2FF;                /* Electric Sapphire Cyan */
+  --primary-hover: #38BDF8;          /* Vibrant Cyan */
+  --primary-glow: rgba(0, 210, 255, 0.25);
+  --primary-soft: rgba(0, 210, 255, 0.12);
 
-  --ai: #1DB954;
-  --ai-glow: rgba(30, 215, 96, 0.3);
-  --ai-soft: rgba(29, 185, 84, 0.15);
+  --ai: #6366F1;                     /* Royal Indigo Violet */
+  --ai-glow: rgba(99, 102, 241, 0.25);
+  --ai-soft: rgba(99, 102, 241, 0.12);
 
-  --secondary-accent: #9EA5B0;       /* Cool Ash Gray */
+  --secondary-accent: #38BDF8;
 
-  --success: #1DB954;
-  --success-soft: rgba(29, 185, 84, 0.15);
+  --success: #06B6D4;                /* Teal Cyan Healthy Accent (REPLACES STANDARD GREEN) */
+  --success-soft: rgba(6, 182, 212, 0.12);
 
-  --warning: #F59E0B;                /* Electric Amber */
-  --warning-soft: rgba(245, 158, 11, 0.15);
+  --warning: #F59E0B;                /* Amber Gold */
+  --warning-soft: rgba(245, 158, 11, 0.12);
 
-  --danger: #FF3B30;                 /* Crimson Red */
-  --danger-soft: rgba(255, 59, 48, 0.15);
+  --danger: #F43F5E;                 /* Soft Burnt Coral (REPLACES HARSH RED) */
+  --danger-soft: rgba(244, 63, 94, 0.12);
 
-  --text-primary: #F9FAFB;           /* Crisp High-Contrast Pure White */
-  --text-secondary: #9EA5B0;         /* Ash Slate Gray */
-  --text-muted: #6B7280;             /* Cool Grey */
+  --text-primary: #F8FAFC;           /* Soft Platinum White */
+  --text-secondary: #94A3B8;         /* Slate Blue Gray */
+  --text-muted: #64748B;             /* Muted Slate */
 
-  --border: #2D3238;                 /* Hairline Ash Gray Border */
-  --divider: #25292E;
+  --border: #23334D;                 /* Hairline Cobalt Slate Border */
+  --divider: #1E2C44;
 
-  --input-bg: #141619;
-  --hover: #25292E;
+  --input-bg: #0E1726;
+  --hover: #1E2C44;
 
-  --focus: #1DB954;
+  --focus: #00D2FF;
 
-  --btn-primary-bg: #1DB954;
-  --btn-primary-text: #0F1113;
+  --btn-primary-bg: #00D2FF;
+  --btn-primary-text: #0B111E;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -63,7 +63,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -73,35 +73,35 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* Ash Slate Glass Panel */
+/* Sapphire Slate Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .glass-panel:hover {
   background: var(--surface-elevated);
-  border-color: rgba(30, 215, 96, 0.4);
+  border-color: rgba(0, 210, 255, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--primary-soft);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35), 0 0 15px var(--primary-soft);
 }
 
 .glass-panel-glow {
   background: var(--surface);
   border: 1px solid var(--primary);
   box-shadow: 0 0 20px var(--primary-glow);
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
 }
 
-/* Spotify Green Accent Text */
+/* Sapphire Cyan Accent Text */
 .gradient-text {
   color: var(--primary);
 }
 
-.highlight-green {
+.highlight-cyan {
   color: var(--primary);
 }
 
@@ -140,13 +140,13 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Spotify Green Primary CTA Button */
+/* Sapphire Primary CTA Button */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 2rem;
+  border-radius: 0.4rem;
   font-weight: 800;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -160,8 +160,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-primary:hover {
   background: var(--primary-hover);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(30, 215, 96, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
 }
 
 /* Secondary Button */
@@ -170,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   border: 1px solid var(--border);
   padding: 0.65rem 1.35rem;
-  border-radius: 2rem;
+  border-radius: 0.4rem;
   font-weight: 600;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 2rem;
+  border-radius: 0.4rem;
   font-weight: 700;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -208,10 +208,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-success {
   background: var(--success);
-  color: #0F1113;
+  color: #0B111E;
   border: none;
   padding: 0.65rem 1.35rem;
-  border-radius: 2rem;
+  border-radius: 0.4rem;
   font-weight: 800;
   font-family: var(--font-heading);
   font-size: 0.85rem;
@@ -223,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-success:hover {
-  background: var(--primary-hover);
+  opacity: 0.92;
 }
 
 /* Input Fields */
@@ -232,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 0.65rem 1rem;
-  border-radius: 2rem;
+  border-radius: 0.4rem;
   font-size: 0.875rem;
   font-family: var(--font-sans);
   outline: none;
@@ -241,7 +241,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .input-field:focus {
   border-color: var(--focus);
-  box-shadow: 0 0 0 2px var(--primary-soft);
+  box-shadow: 0 0 0 3px var(--primary-soft);
 }
 .input-field::placeholder {
   color: var(--text-muted);
@@ -286,7 +286,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-ai {
-  background: var(--primary-soft);
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  background: var(--ai-soft);
+  color: var(--ai);
+  border: 1px solid var(--ai);
 }

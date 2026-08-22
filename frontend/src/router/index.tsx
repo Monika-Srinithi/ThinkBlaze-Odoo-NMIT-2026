@@ -1,53 +1,56 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { Layout } from '../components/layout/Layout';
-import { ProtectedRoute } from './ProtectedRoute';
-import { Login } from '../pages/Login';
-import { HRDashboard } from '../pages/dashboard/HRDashboard';
-import { EmployeeDashboard } from '../pages/dashboard/EmployeeDashboard';
-import { EmployeeList } from '../pages/employees/EmployeeList';
-import { EmployeeDetail } from '../pages/employees/EmployeeDetail';
-import { AttendancePage } from '../pages/attendance/AttendancePage';
-import { LeavePage } from '../pages/leave/LeavePage';
-import { PayrollPage } from '../pages/payroll/PayrollPage';
-import { IntelligencePage } from '../pages/intelligence/IntelligencePage';
-import { SimulatorPage } from '../pages/simulator/SimulatorPage';
-import { CopilotPage } from '../pages/agents/CopilotPage';
-import { AuditPage } from '../pages/audit/AuditPage';
-import { NotFound } from '../pages/NotFound';
-import { useAuthStore } from '../store/auth';
+﻿import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import Sidebar from '../components/layout/Sidebar';
+import HRCommandCenter from '../pages/dashboard/HRCommandCenter';
+import WhatIfSimulator from '../pages/simulator/WhatIfSimulator';
+import CopilotPage from '../pages/agents/CopilotPage';
+import DecisionTrace from '../pages/agents/DecisionTrace';
+import RiskDashboard from '../pages/intelligence/RiskDashboard';
+import Login from '../pages/Login';
 
-const DashboardRouter = () => {
-  const user = useAuthStore(state => state.user);
-  if (user?.role === 'admin' || user?.role === 'hr') {
-    return <HRDashboard />;
-  }
-  return <EmployeeDashboard />;
+// Placeholder components for basic routes
+const Placeholder = ({ title }: { title: string }) => <div style={{ padding: '2rem' }}><h1>{title}</h1></div>;
+
+const AuthLayout = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return <Navigate to="/login" replace />;
+  
+  return (
+    <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
+      <Sidebar />
+      <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg-base)' }}>
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export const router = createBrowserRouter([
-  { path: '/login', element: <Login /> },
+  {
+    path: '/login',
+    element: <Login />
+  },
   {
     path: '/',
-    element: <ProtectedRoute />,
+    element: <AuthLayout />,
     children: [
-      {
-        path: '/',
-        element: <Layout />,
-        children: [
-          { index: true, element: <Navigate to="/dashboard" replace /> },
-          { path: 'dashboard', element: <DashboardRouter /> },
-          { path: 'employees', element: <EmployeeList /> },
-          { path: 'employees/:id', element: <EmployeeDetail /> },
-          { path: 'attendance', element: <AttendancePage /> },
-          { path: 'leave', element: <LeavePage /> },
-          { path: 'payroll', element: <PayrollPage /> },
-          { path: 'intelligence', element: <IntelligencePage /> },
-          { path: 'simulator', element: <SimulatorPage /> },
-          { path: 'copilot', element: <CopilotPage /> },
-          { path: 'audit', element: <AuditPage /> },
-        ]
-      }
+      { path: '/', element: <Navigate to="/dashboard" replace /> },
+      { path: '/dashboard', element: <HRCommandCenter /> }, // the main dashboard
+      { path: '/employees', element: <Placeholder title="Employees" /> },
+      { path: '/employees/:id', element: <Placeholder title="Employee Detail" /> },
+      { path: '/attendance', element: <Placeholder title="Attendance" /> },
+      { path: '/leave', element: <Placeholder title="Leave" /> },
+      { path: '/payroll', element: <Placeholder title="Payroll" /> },
+      
+      // Intelligence Routes
+      { path: '/intelligence', element: <RiskDashboard /> },
+      { path: '/simulator', element: <WhatIfSimulator /> },
+      { path: '/simulator/:leaveId', element: <WhatIfSimulator /> },
+      { path: '/copilot', element: <CopilotPage /> },
+      { path: '/traces', element: <DecisionTrace /> },
+      { path: '/audit', element: <Placeholder title="Audit Log" /> },
+      
+      { path: '*', element: <div style={{ padding: '2rem' }}><h1>404 Not Found</h1></div> }
     ]
-  },
-  { path: '*', element: <NotFound /> }
+  }
 ]);
+

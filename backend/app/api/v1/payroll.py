@@ -1,108 +1,153 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, func, and_
+from typing import Optional
+import uuid
+from datetime import date
+from decimal import Decimal
+
 from app.core.database import get_db
 from app.services.auth_service import get_current_user, require_hr
-from app.schemas.payroll import PayrollResponse, PayrollCreate
-from app.models.user import User
 from app.models.payroll import PayrollRecord, PayrollStatus
 from app.models.employee import Employee
-from uuid import UUID
-from decimal import Decimal
+from app.models.user import User
 
 router = APIRouter(prefix='/payroll', tags=['Payroll'])
 
 
-@router.get('/my', response_model=list[PayrollResponse])
+def payroll_to_dict(p: PayrollRecord, emp: Employee = None) -> dict:
+    return {
+        "id": str(p.id),
+        "employee_id": str(p.employee_id),
+        "employee_name": f"{emp.first_name} {emp.last_name}" if emp else None,
+        "employee_code": emp.employee_code if emp else None,
+        "department": emp.department if emp else None,
+        "month": p.month,
+        "year": p.year,
+        "period": f"{['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][p.month-1]} {p.year}",
+        "basic_salary": float(p.basic_salary or 0),
+        "hra": float(p.hra or 0),
+        "other_allowances": float(p.other_allowances or 0),
+        "gross_salary": float(p.gross_salary or 0),
+        "pf_deduction": float(p.pf_deduction or 0),
+        "tax_deduction": float(p.tax_deduction or 0),
+        "other_deductions": float(p.other_deductions or 0),
+        "net_salary": float(p.net_salary or 0),
+        "status": p.status if isinstance(p.status, str) else p.status.value,
+        "payment_date": str(p.payment_date) if p.payment_date else None,
+    }
+
+
+@router.get('/my')
 async def get_my_payroll(
+    limit: int = Query(12),
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
+    if not current_user.employee_id:
+        return []
     result = await db.execute(
-        select(PayrollRecord)
+        select(PayrollRecord, Employee)
+        .join(Employee, Employee.id == PayrollRecord.employee_id)
         .where(PayrollRecord.employee_id == current_user.employee_id)
         .order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc())
-        .limit(24)
+        .limit(limit)
     )
-    records = result.scalars().all()
-    return [PayrollResponse.model_validate(r) for r in records]
+    return [payroll_to_dict(p, e) for p, e in result.all()]
 
 
-@router.get('', response_model=list[PayrollResponse])
-async def get_all_payroll(
-    year: int = Query(None),
-    month: int = Query(None),
+@router.get('')
+async def list_payroll(
+    employee_id: Optional[str] = None,
+    month: Optional[int] = None,
+    year: Optional[int] = None,
+    limit: int = Query(50),
+    offset: int = Query(0),
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_hr)
+    current_user: User = Depends(require_hr),
 ):
-    from sqlalchemy import and_
-    query = select(PayrollRecord)
-    filters = []
-    if year:
-        filters.append(PayrollRecord.year == year)
+    q = select(PayrollRecord, Employee).join(Employee, Employee.id == PayrollRecord.employee_id)
+    if employee_id:
+        q = q.where(PayrollRecord.employee_id == employee_id)
     if month:
-        filters.append(PayrollRecord.month == month)
-    if filters:
-        query = query.where(and_(*filters))
-    query = query.order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).limit(500)
-    result = await db.execute(query)
-    records = result.scalars().all()
-    return [PayrollResponse.model_validate(r) for r in records]
+        q = q.where(PayrollRecord.month == month)
+    if year:
+        q = q.where(PayrollRecord.year == year)
+    q = q.order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).limit(limit).offset(offset)
+    result = await db.execute(q)
+    return [payroll_to_dict(p, e) for p, e in result.all()]
+
+
+@router.get('/{payroll_id}')
+async def get_payroll(
+    payroll_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    result = await db.execute(
+        select(PayrollRecord, Employee)
+        .join(Employee, Employee.id == PayrollRecord.employee_id)
+        .where(PayrollRecord.id == payroll_id)
+    )
+    row = result.first()
+    if not row:
+        raise HTTPException(status_code=404, detail='Payroll record not found')
+    p, e = row
+    if current_user.role == 'employee' and str(e.id) != str(current_user.employee_id):
+        raise HTTPException(status_code=403, detail='Access denied')
+    return payroll_to_dict(p, e)
 
 
 @router.post('/generate', status_code=201)
 async def generate_payroll(
-    month: int = Query(..., ge=1, le=12),
-    year: int = Query(...),
+    body: dict,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(require_hr)
+    current_user: User = Depends(require_hr),
 ):
+    month = body.get('month', date.today().month)
+    year = body.get('year', date.today().year)
+
     # Get all active employees
-    result = await db.execute(select(Employee).where(Employee.status == 'active'))
+    result = await db.execute(
+        select(Employee).where(Employee.status.in_(['active', 'on_leave']))
+    )
     employees = result.scalars().all()
-    generated = 0
+    created = 0
+    skipped = 0
+
     for emp in employees:
-        # Check if already generated
-        existing = await db.execute(
+        # Check if already exists
+        exists = await db.execute(
             select(PayrollRecord).where(
-                PayrollRecord.employee_id == emp.id,
-                PayrollRecord.month == month,
-                PayrollRecord.year == year
+                and_(
+                    PayrollRecord.employee_id == emp.id,
+                    PayrollRecord.month == month,
+                    PayrollRecord.year == year,
+                )
             )
         )
-        if existing.scalar_one_or_none():
+        if exists.scalar_one_or_none():
+            skipped += 1
             continue
-        basic = Decimal(str(emp.salary or 50000))
-        hra = basic * Decimal('0.4')
-        other_allowances = basic * Decimal('0.1')
-        pf = basic * Decimal('0.12')
-        gross = basic + hra + other_allowances
-        tax = gross * Decimal('0.1') if gross > Decimal('50000') else Decimal('0')
+        basic = emp.salary or Decimal('50000')
+        hra = (basic * Decimal('0.4')).quantize(Decimal('0.01'))
+        allow = (basic * Decimal('0.1')).quantize(Decimal('0.01'))
+        pf = (basic * Decimal('0.12')).quantize(Decimal('0.01'))
+        gross = basic + hra + allow
+        tax = (gross * Decimal('0.1')).quantize(Decimal('0.01')) if gross > 50000 else Decimal('0')
         net = gross - pf - tax
-        record = PayrollRecord(
-            employee_id=emp.id, month=month, year=year,
-            basic_salary=basic, hra=hra, other_allowances=other_allowances,
+        pr = PayrollRecord(
+            id=str(uuid.uuid4()),
+            employee_id=emp.id,
+            month=month, year=year,
+            basic_salary=basic, hra=hra, other_allowances=allow,
             pf_deduction=pf, tax_deduction=tax, other_deductions=Decimal('0'),
-            gross_salary=gross, net_salary=net, status=PayrollStatus.processed
+            gross_salary=gross, net_salary=net,
+            status='processed',
+            payment_date=date(year, month, 28),
         )
-        db.add(record)
-        generated += 1
+        db.add(pr)
+        created += 1
+
     await db.commit()
-    return {'message': f'Generated payroll for {generated} employees', 'month': month, 'year': year}
-
-
-@router.get('/{payroll_id}', response_model=PayrollResponse)
-async def get_payslip(
-    payroll_id: UUID,
-    db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    from fastapi import HTTPException
-    result = await db.execute(select(PayrollRecord).where(PayrollRecord.id == payroll_id))
-    record = result.scalar_one_or_none()
-    if not record:
-        raise HTTPException(status_code=404, detail='Payslip not found')
-    # Employees can only see their own
-    if current_user.role == 'employee' and record.employee_id != current_user.employee_id:
-        raise HTTPException(status_code=403, detail='Access denied')
-    return PayrollResponse.model_validate(record)
+    return {"message": f"Payroll generated: {created} created, {skipped} already existed", "month": month, "year": year}

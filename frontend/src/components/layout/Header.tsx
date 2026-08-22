@@ -8,8 +8,8 @@ export const Header = () => {
     <header
       style={{
         height: '60px',
-        background: 'var(--bg-surface)',
-        borderBottom: '1px solid var(--border-subtle)',
+        background: 'var(--surface)',
+        borderBottom: '1px solid var(--border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -17,12 +17,12 @@ export const Header = () => {
         position: 'sticky',
         top: 0,
         zIndex: 20,
-        transition: 'background-color 0.3s ease, border-color 0.3s ease',
+        transition: 'background-color 0.25s ease, border-color 0.25s ease',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '400px' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
+          <Search size={16} style={{ position: 'absolute', left: '0.9rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
           <input
             type="text"
             className="input-field"
@@ -33,7 +33,8 @@ export const Header = () => {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(0, 217, 255, 0.12)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)', boxShadow: '0 0 12px var(--primary-glow)' }}>
+        {/* AI Decision Engine Badge */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--primary-soft)', color: 'var(--primary)', padding: '0.35rem 0.85rem', borderRadius: '2rem', fontSize: '0.8rem', fontWeight: 800, border: '1px solid var(--primary)' }}>
           <Sparkles size={14} className="animate-live-pulse" /> AI Decision Engine Active
         </div>
 
@@ -45,9 +46,9 @@ export const Header = () => {
         <button
           onClick={toggleTheme}
           style={{
-            background: 'var(--bg-surface-hover)',
-            border: '1px solid var(--border-subtle)',
-            padding: '0.5rem 0.85rem',
+            background: 'var(--hover)',
+            border: '1px solid var(--border)',
+            padding: '0.45rem 0.85rem',
             borderRadius: '2rem',
             color: 'var(--text-primary)',
             cursor: 'pointer',
@@ -63,11 +64,11 @@ export const Header = () => {
         >
           {theme === 'dark' ? (
             <>
-              <Sun size={15} color="#F59E0B" /> Light
+              <Sun size={15} color="var(--warning)" /> Light
             </>
           ) : (
             <>
-              <Moon size={15} color="#7C5CFF" /> Dark
+              <Moon size={15} color="var(--ai)" /> Dark
             </>
           )}
         </button>
@@ -76,8 +77,8 @@ export const Header = () => {
         <button
           style={{
             position: 'relative',
-            background: 'var(--bg-surface-hover)',
-            border: '1px solid var(--border-subtle)',
+            background: 'var(--hover)',
+            border: '1px solid var(--border)',
             padding: '0.5rem',
             borderRadius: '50%',
             color: 'var(--text-secondary)',
@@ -85,7 +86,7 @@ export const Header = () => {
             transition: 'transform 0.2s',
           }}
           title="Notifications"
-          onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+          onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
           onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
         >
           <Bell size={16} />
@@ -96,9 +97,8 @@ export const Header = () => {
               right: '2px',
               width: '8px',
               height: '8px',
-              background: 'var(--accent-rose)',
+              background: 'var(--danger)',
               borderRadius: '50%',
-              boxShadow: '0 0 8px var(--accent-rose)',
             }}
           />
         </button>

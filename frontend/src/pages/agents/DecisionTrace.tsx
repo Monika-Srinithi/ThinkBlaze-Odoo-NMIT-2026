@@ -68,7 +68,7 @@ export const DecisionTrace = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <FileText size={34} color="var(--primary)" />
+        <FileText size={34} color="var(--ai)" />
         <div>
           <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>Decision Traces & Trees</h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
@@ -90,15 +90,15 @@ export const DecisionTrace = () => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   cursor: 'pointer',
-                  background: 'rgba(255,255,255,0.02)',
+                  background: 'var(--surface)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  {isExpanded ? <ChevronDown size={20} color="var(--primary)" /> : <ChevronRight size={20} color="var(--text-secondary)" />}
+                  {isExpanded ? <ChevronDown size={20} color="var(--ai)" /> : <ChevronRight size={20} color="var(--text-secondary)" />}
                   <div>
                     <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-primary)' }}>{t.question}</div>
                     <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                      <span>Agent: <strong style={{ color: 'var(--accent-cyan)' }}>{t.agent_name}</strong></span>
+                      <span>Agent: <strong style={{ color: 'var(--ai)' }}>{t.agent_name}</strong></span>
                       <span>Started: {t.started_at ? new Date(t.started_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—'}</span>
                       <span style={{ fontFamily: 'var(--font-mono)' }}>ID: #{t.trace_id?.slice(0, 10)}</span>
                     </div>
@@ -111,12 +111,12 @@ export const DecisionTrace = () => {
               </div>
 
               {isExpanded && (
-                <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.25)' }}>
+                <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border)', background: 'var(--surface-elevated)' }}>
                   <div style={{ marginBottom: '1.25rem' }}>
-                    <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', color: 'var(--ai)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 800 }}>
                       Result Summary & Decision Output
                     </h4>
-                    <div style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--text-primary)', background: 'rgba(16,185,129,0.08)', padding: '1rem', borderRadius: '0.6rem', border: '1px solid rgba(16,185,129,0.2)' }}>
+                    <div style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--text-primary)', background: 'var(--success-soft)', padding: '1rem', borderRadius: '0.6rem', border: '1px solid var(--success)' }}>
                       {t.result_summary || 'Recommendation processed successfully.'}
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export const DecisionTrace = () => {
                     </h4>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {(t.reasoning_steps || []).map((step: string, i: number) => (
-                        <div key={i} style={{ padding: '0.65rem 1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '0.5rem', fontSize: '0.875rem', fontFamily: 'var(--font-sans)', borderLeft: '3px solid var(--accent-cyan)' }}>
+                        <div key={i} style={{ padding: '0.65rem 1rem', background: 'var(--surface)', borderRadius: '0.5rem', fontSize: '0.875rem', fontFamily: 'var(--font-sans)', borderLeft: '3px solid var(--ai)', border: '1px solid var(--border)', borderLeftWidth: '3px' }}>
                           {step}
                         </div>
                       ))}

@@ -1,4 +1,4 @@
-﻿import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Activity, AlertTriangle, Users, Calendar, Zap, ArrowRight, ShieldAlert } from 'lucide-react';
 import { apiFetch } from '../../api/client';
@@ -43,7 +43,7 @@ export default function HRCommandCenter() {
   });
 
   const score = healthData?.overall_health_score ?? FALLBACK_HEALTH.overall_health_score;
-  const gaugeColor = score > 80 ? 'var(--primary)' : score > 60 ? 'var(--accent-amber)' : 'var(--accent-rose)';
+  const gaugeColor = score > 80 ? 'var(--success)' : score > 60 ? 'var(--warning)' : 'var(--danger)';
   
   const fetchedTeams = healthData?.teams || [];
   const teams = fetchedTeams.length > 0 ? fetchedTeams : FALLBACK_HEALTH.teams;
@@ -71,7 +71,7 @@ export default function HRCommandCenter() {
             Real-time workforce health monitoring, operational risk detection, and pending action simulation.
           </p>
         </div>
-        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.04)', padding: '0.5rem 1rem', borderRadius: '2rem', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', background: 'var(--surface-elevated)', padding: '0.5rem 1rem', borderRadius: '2rem', border: '1px solid var(--border)' }}>
           Live · {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </div>
       </div>
@@ -79,22 +79,28 @@ export default function HRCommandCenter() {
       {/* Top Stats Row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
         {/* Animated Health Gauge */}
-        <div className="glass-panel-glow" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+        <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <div style={{ position: 'relative', width: '84px', height: '84px', flexShrink: 0 }}>
             <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', width: '100%', height: '100%' }}>
-              <circle cx="50" cy="50" r="40" fill="transparent" stroke="rgba(255,255,255,0.08)" strokeWidth="12" />
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#00D9FF" />
+                  <stop offset="100%" stopColor="#7C5CFF" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--border)" strokeWidth="12" />
               <circle
                 cx="50"
                 cy="50"
                 r="40"
                 fill="transparent"
-                stroke={gaugeColor}
+                stroke="url(#scoreGrad)"
                 strokeWidth="12"
                 strokeDasharray={`${(score / 100) * 251.2} 251.2`}
-                style={{ transition: 'stroke-dasharray 1.5s ease-in-out', filter: `drop-shadow(0 0 6px ${gaugeColor})` }}
+                style={{ transition: 'stroke-dasharray 1.2s ease-in-out' }}
               />
             </svg>
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', fontWeight: 900, color: gaugeColor, fontFamily: 'var(--font-heading)' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
               {score.toFixed(1)}
             </div>
           </div>
@@ -109,9 +115,9 @@ export default function HRCommandCenter() {
         </div>
 
         {[
-          { label: 'Teams at Risk', value: teamsAtRisk, icon: AlertTriangle, color: 'var(--accent-rose)', bg: 'rgba(244,63,94,0.1)' },
-          { label: 'Pending Actions', value: pendingLeaves.length, icon: Zap, color: 'var(--accent-amber)', bg: 'rgba(245,158,11,0.1)' },
-          { label: 'On Leave Today', value: onLeave, icon: Users, color: 'var(--accent-cyan)', bg: 'rgba(6,182,212,0.1)' },
+          { label: 'Teams at Risk', value: teamsAtRisk, icon: AlertTriangle, color: 'var(--danger)', bg: 'var(--danger-soft)' },
+          { label: 'Pending Actions', value: pendingLeaves.length, icon: Zap, color: 'var(--warning)', bg: 'var(--warning-soft)' },
+          { label: 'On Leave Today', value: onLeave, icon: Users, color: 'var(--primary)', bg: 'var(--primary-soft)' },
         ].map((m, i) => (
           <div key={i} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
@@ -133,7 +139,7 @@ export default function HRCommandCenter() {
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h2 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Zap size={22} color="var(--accent-amber)" /> Action Center
+                <Zap size={22} color="var(--warning)" /> Action Center
                 <span className="badge badge-warning" style={{ marginLeft: '0.5rem' }}>
                   {pendingLeaves.length} Pending Actions
                 </span>
@@ -142,7 +148,7 @@ export default function HRCommandCenter() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {pendingLeaves.map((leave: any) => {
-                                return (
+                return (
                   <div
                     key={leave.id}
                     style={{
@@ -150,13 +156,11 @@ export default function HRCommandCenter() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       padding: '1.25rem',
-                      background: 'rgba(0,0,0,0.3)',
-                      borderRadius: '0.85rem',
-                      border: '1px solid var(--border-subtle)',
+                      background: 'var(--surface-elevated)',
+                      borderRadius: '0.75rem',
+                      border: '1px solid var(--border)',
                       transition: 'all 0.2s',
                     }}
-                    onMouseOver={(e) => (e.currentTarget.style.borderColor = 'var(--primary)')}
-                    onMouseOut={(e) => (e.currentTarget.style.borderColor = 'var(--border-subtle)')}
                   >
                     <div>
                       <div style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
@@ -168,7 +172,7 @@ export default function HRCommandCenter() {
                           <Calendar size={13} /> {leave.start_date} → {leave.end_date} ({leave.total_days || 5} days)
                         </span>
                         <span>·</span>
-                        <span style={{ color: 'var(--accent-rose)', fontWeight: 600 }}>
+                        <span style={{ color: 'var(--danger)', fontWeight: 600 }}>
                           {leave.team} capacity drops to {leave.simulated_capacity}% if approved
                         </span>
                       </div>
@@ -198,7 +202,7 @@ export default function HRCommandCenter() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {teams.map((team: any, i: number) => {
                 const cap = team.capacity_pct || 0;
-                const barColor = cap < 65 ? 'var(--accent-rose)' : cap < 80 ? 'var(--accent-amber)' : 'var(--primary)';
+                const barColor = cap < 65 ? 'var(--danger)' : cap < 80 ? 'var(--warning)' : 'var(--success)';
                 const riskBadge = team.risk_level === 'critical' ? 'badge-danger' : team.risk_level === 'high' ? 'badge-warning' : 'badge-success';
 
                 return (
@@ -210,15 +214,14 @@ export default function HRCommandCenter() {
                         <span style={{ fontWeight: 800, color: barColor, fontFamily: 'var(--font-heading)', fontSize: '1rem' }}>{cap}%</span>
                       </div>
                     </div>
-                    <div style={{ width: '100%', height: '10px', background: 'rgba(255,255,255,0.06)', borderRadius: '5px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '8px', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
                       <div
                         style={{
                           width: `${cap}%`,
                           height: '100%',
                           background: barColor,
-                          borderRadius: '5px',
-                          transition: 'width 1.2s ease-in-out',
-                          boxShadow: `0 0 10px ${barColor}88`,
+                          borderRadius: '4px',
+                          transition: 'width 1s ease-in-out',
                         }}
                       />
                     </div>
@@ -234,18 +237,18 @@ export default function HRCommandCenter() {
           {/* Risk Alerts Card */}
           <div className="glass-panel" style={{ padding: '1.5rem', flex: 1 }}>
             <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <ShieldAlert size={20} color="var(--accent-rose)" /> Top Operational Risks
+              <ShieldAlert size={20} color="var(--danger)" /> Top Operational Risks
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {alerts.map((a: any, i: number) => {
-                const borderColor = a.severity === 'critical' ? 'var(--accent-rose)' : a.severity === 'high' ? 'var(--accent-amber)' : 'var(--accent-cyan)';
-                const bg = a.severity === 'critical' ? 'rgba(244,63,94,0.1)' : a.severity === 'high' ? 'rgba(245,158,11,0.1)' : 'rgba(6,182,212,0.1)';
+                const borderColor = a.severity === 'critical' ? 'var(--danger)' : a.severity === 'high' ? 'var(--warning)' : 'var(--primary)';
+                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : a.severity === 'high' ? 'var(--warning-soft)' : 'var(--primary-soft)';
                 return (
                   <div
                     key={i}
                     style={{
                       padding: '1rem',
-                      borderRadius: '0.75rem',
+                      borderRadius: '0.65rem',
                       borderLeft: `4px solid ${borderColor}`,
                       background: bg,
                       fontSize: '0.875rem',
@@ -263,11 +266,11 @@ export default function HRCommandCenter() {
           {/* Risk Distribution */}
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 700 }}>Risk Distribution Matrix</h3>
-            <div style={{ display: 'flex', height: '22px', borderRadius: '11px', overflow: 'hidden', width: '100%', gap: '3px' }}>
-              <div style={{ flex: riskDist.critical || 1, background: 'var(--accent-rose)', borderRadius: '3px' }} title={`Critical: ${riskDist.critical}`} />
-              <div style={{ flex: riskDist.high || 1, background: 'var(--accent-amber)', borderRadius: '3px' }} title={`High: ${riskDist.high}`} />
-              <div style={{ flex: riskDist.medium || 1, background: 'var(--accent-cyan)', borderRadius: '3px' }} title={`Medium: ${riskDist.medium}`} />
-              <div style={{ flex: riskDist.low || 2, background: 'var(--primary)', borderRadius: '3px' }} title={`Normal: ${riskDist.low}`} />
+            <div style={{ display: 'flex', height: '20px', borderRadius: '10px', overflow: 'hidden', width: '100%', gap: '3px' }}>
+              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)', borderRadius: '3px' }} title={`Critical: ${riskDist.critical}`} />
+              <div style={{ flex: riskDist.high || 1, background: 'var(--warning)', borderRadius: '3px' }} title={`High: ${riskDist.high}`} />
+              <div style={{ flex: riskDist.medium || 1, background: 'var(--primary)', borderRadius: '3px' }} title={`Medium: ${riskDist.medium}`} />
+              <div style={{ flex: riskDist.low || 2, background: 'var(--success)', borderRadius: '3px' }} title={`Normal: ${riskDist.low}`} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.85rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
               <span>🔴 {riskDist.critical || 1} Critical</span>
@@ -281,4 +284,3 @@ export default function HRCommandCenter() {
     </div>
   );
 }
-

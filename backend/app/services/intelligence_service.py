@@ -1,5 +1,5 @@
 ﻿"""
-ThinkBlaze Dayflow — Workforce Intelligence Engine
+Dayflow — Workforce Intelligence Engine
 
 Deterministic, explainable risk scoring grounded in real HRMS data.
 Core of the WOW demo: DATA → DETECT → EXPLAIN → SIMULATE → RECOMMEND → EXECUTE
@@ -751,4 +751,5 @@ class WorkforceIntelligenceEngine:
                 for r in absent_records[:10]
             ],
         }
+
 

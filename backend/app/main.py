@@ -14,7 +14,7 @@ logger = logging.getLogger("dayflow")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("🚀 ThinkBlaze Dayflow starting up...")
+    logger.info("🚀 Dayflow starting up...")
     await init_db()
     logger.info("✅ Database initialized")
     yield
@@ -22,8 +22,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="ThinkBlaze Dayflow API",
-    description="AI-Powered Workforce Decision Intelligence — NMIT Hackathon 2026",
+    title="Dayflow API",
+    description="AI-Powered Workforce Decision Intelligence Platform",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs",
@@ -47,7 +47,6 @@ app.add_middleware(
 )
 
 
-# Request timing middleware
 @app.middleware("http")
 async def add_timing_header(request: Request, call_next):
     start = time.time()
@@ -57,7 +56,6 @@ async def add_timing_header(request: Request, call_next):
     return response
 
 
-# Routes
 app.include_router(api_router, prefix="/api/v1")
 
 
@@ -70,7 +68,7 @@ async def root():
 async def health():
     return {
         "status": "ok",
-        "service": "ThinkBlaze Dayflow",
+        "service": "Dayflow",
         "version": "1.0.0",
         "environment": settings.ENVIRONMENT,
     }

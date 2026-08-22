@@ -1,6 +1,6 @@
-<div align="center">
+﻿<div align="center">
 
-# 🚀 ThinkBlaze Dayflow
+# 🚀 Dayflow
 
 **AI-Powered Human Resource Management System**
 
@@ -163,3 +163,4 @@ MIT License — See [LICENSE](LICENSE) for details.
 <div align="center">
 Built with ❤️ for Odoo × NMIT Bangalore Hackathon 2026
 </div>
+

@@ -1,5 +1,5 @@
--- ============================================================
--- ThinkBlaze Dayflow — PostgreSQL Initialization Script
+﻿-- ============================================================
+-- Dayflow — PostgreSQL Initialization Script
 -- ============================================================
 
 -- Extensions
@@ -192,3 +192,4 @@ CREATE TRIGGER update_attendance_updated_at BEFORE UPDATE ON attendance FOR EACH
 CREATE TRIGGER update_leave_requests_updated_at BEFORE UPDATE ON leave_requests FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_leave_balances_updated_at BEFORE UPDATE ON leave_balances FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_payroll_records_updated_at BEFORE UPDATE ON payroll_records FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+

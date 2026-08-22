@@ -1,4 +1,4 @@
-# ThinkBlaze Dayflow — API Documentation
+﻿# Dayflow — API Documentation
 
 ## Base URL
 ```
@@ -157,3 +157,4 @@ Invalidates refresh token.
 ## Rate Limits
 - Auth endpoints: 10 req/min
 - Other endpoints: 100 req/min per user
+

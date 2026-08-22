@@ -1,5 +1,5 @@
 ﻿"""
-ThinkBlaze Dayflow â€” WOW Demo Seed Data
+Dayflow â€” WOW Demo Seed Data
 Creates a perfect hackathon demo scenario that guarantees the WOW workflow works.
 
 Scenario:
@@ -380,7 +380,7 @@ async def seed_all():
 
 
 async def main():
-    print("\nðŸŒ± ThinkBlaze Dayflow â€” WOW Demo Seeder")
+    print("\nðŸŒ± Dayflow â€” WOW Demo Seeder")
     print("=" * 50)
     await create_tables()
     await seed_all()
@@ -390,5 +390,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 

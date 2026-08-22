@@ -1,4 +1,4 @@
-# ThinkBlaze Dayflow — Architecture Decision Records
+﻿# Dayflow — Architecture Decision Records
 
 ## ADR-001: Technology Stack Selection
 
@@ -54,3 +54,4 @@ This ensures the system works fully for hackathon demo without exposing API keys
 **Status:** Accepted
 
 **Decision:** Dark glassmorphism design (bg: #0f0f1a, cards: rgba white 5%) for premium aesthetic. CSS custom properties for consistency. Framer Motion for animations.
+

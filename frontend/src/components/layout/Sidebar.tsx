@@ -104,7 +104,7 @@ export default function Sidebar() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <Activity size={18} color={isActive ? '#0A0A0A' : 'var(--text-secondary)'} /> Command Center
               </div>
-              <span className="animate-live-pulse" style={{ background: isActive ? '#0A0A0A' : 'var(--danger)', color: isActive ? 'var(--primary)' : '#FFFFFF', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.2rem', fontWeight: 800 }}>LIVE</span>
+              <span className="animate-live-pulse" style={{ background: isActive ? '#0A0A0A' : 'var(--primary)', color: isActive ? 'var(--primary)' : '#0A0A0A', fontSize: '0.65rem', padding: '0.12rem 0.45rem', borderRadius: '0.2rem', fontWeight: 800 }}>LIVE</span>
             </div>
           )}
         </NavLink>
@@ -166,7 +166,7 @@ export default function Sidebar() {
             <div style={{ fontSize: '0.725rem', color: 'var(--primary)', fontWeight: 700 }}>HR Director</div>
           </div>
         </div>
-        <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.15s' }} title="Logout" onMouseOver={e => e.currentTarget.style.color = 'var(--danger)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>
+        <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.15s' }} title="Logout" onMouseOver={e => e.currentTarget.style.color = 'var(--primary)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>
           <LogOut size={16} />
         </button>
       </div>

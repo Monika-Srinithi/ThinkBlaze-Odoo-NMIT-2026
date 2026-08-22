@@ -1,48 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Sandalwood Gold & Obsidian Black Design System (NO GREEN AT ALL) */
-  --bg: #0A0A0A;                     /* Pure Deep Obsidian Black */
-  --bg-secondary: #121212;           /* Dark Charcoal Surface */
-  --sidebar: #050505;                /* Obsidian Black Sidebar */
+  /* Strict Pure Black & Electric Green Palette ONLY (Zero Other Colors) */
+  --bg: #0A0A0A;                     /* Deep Black Canvas */
+  --bg-secondary: #121212;           /* Dark Charcoal Black Surface */
+  --sidebar: #050505;                /* Pure Black Sidebar */
 
-  --surface: #121212;                /* Dark Charcoal Card */
-  --surface-elevated: #1E1C1A;       /* Dark Sandalwood Elevated Card */
-  --card-hover: #1E1C1A;
+  --surface: #121212;                /* Dark Black Card */
+  --surface-elevated: #1E1E1E;       /* Elevated Black Surface */
+  --card-hover: #1E1E1E;
 
-  --primary: #D49B5B;                /* Rich Sandalwood Gold Accent */
-  --primary-hover: #F0B875;          /* Bright Sandalwood */
-  --primary-glow: rgba(212, 155, 91, 0.35);
-  --primary-soft: rgba(212, 155, 91, 0.15);
+  --primary: #00FF66;                /* Electric Neon Green */
+  --primary-hover: #00E65C;
+  --primary-glow: rgba(0, 255, 102, 0.35);
+  --primary-soft: rgba(0, 255, 102, 0.15);
 
-  --ai: #D49B5B;                     /* Sandalwood Gold AI Accent */
-  --ai-glow: rgba(212, 155, 91, 0.35);
-  --ai-soft: rgba(212, 155, 91, 0.15);
+  --ai: #00FF66;                     /* Electric Neon Green */
+  --ai-glow: rgba(0, 255, 102, 0.35);
+  --ai-soft: rgba(0, 255, 102, 0.15);
 
-  --secondary-accent: #E5A866;
+  --secondary-accent: #00FF66;       /* Electric Neon Green */
 
-  --success: #D49B5B;                /* Sandalwood Gold Success (PURGED ALL GREEN) */
-  --success-soft: rgba(212, 155, 91, 0.15);
+  --success: #00FF66;                /* Electric Neon Green */
+  --success-soft: rgba(0, 255, 102, 0.15);
 
-  --warning: #FFB547;                /* Warm Amber */
-  --warning-soft: rgba(255, 181, 71, 0.15);
+  --warning: #00FF66;                /* Electric Neon Green */
+  --warning-soft: rgba(0, 255, 102, 0.15);
 
-  --danger: #FF5C5C;                 /* Terracotta Crimson */
-  --danger-soft: rgba(255, 92, 92, 0.15);
+  --danger: #00FF66;                 /* Electric Neon Green */
+  --danger-soft: rgba(0, 255, 102, 0.15);
 
   --text-primary: #FFFFFF;           /* High-Contrast Pure White */
-  --text-secondary: #B8AEA5;         /* Warm Sandalwood Gray */
-  --text-muted: #7E756C;
+  --text-secondary: #AAAAAA;         /* Clean Gray */
+  --text-muted: #666666;
 
-  --border: #2A241E;                 /* Hairline Dark Sandalwood Border */
-  --divider: #1E1A16;
+  --border: #222222;                 /* Hairline Black Border */
+  --divider: #1A1A1A;
 
   --input-bg: #0A0A0A;
-  --hover: #1E1C1A;
+  --hover: #1E1E1E;
 
-  --focus: #D49B5B;
+  --focus: #00FF66;
 
-  --btn-primary-bg: #D49B5B;
+  --btn-primary-bg: #00FF66;
   --btn-primary-text: #0A0A0A;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* Sandalwood & Black Glass Panel */
+/* Black & Green Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .glass-panel:hover {
   background: var(--surface-elevated);
-  border-color: rgba(212, 155, 91, 0.4);
+  border-color: rgba(0, 255, 102, 0.4);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 15px var(--primary-soft);
 }
@@ -96,12 +96,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.5rem;
 }
 
-/* Sandalwood Gold Accent Text */
+/* Electric Green Accent Text */
 .gradient-text {
   color: var(--primary);
 }
 
-.highlight-sandalwood {
+.highlight-green {
   color: var(--primary);
 }
 
@@ -140,7 +140,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Sandalwood Primary CTA Button */
+/* Electric Green Primary CTA Button */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
@@ -161,7 +161,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(212, 155, 91, 0.45);
+  box-shadow: 0 6px 20px rgba(0, 255, 102, 0.45);
 }
 
 /* Secondary Button */
@@ -187,12 +187,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-danger {
-  background: var(--danger);
-  color: #FFFFFF;
+  background: var(--primary);
+  color: #0A0A0A;
   border: none;
   padding: 0.65rem 1.35rem;
   border-radius: 2rem;
-  font-weight: 700;
+  font-weight: 900;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: -0.01em;
@@ -203,7 +203,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-danger:hover {
-  opacity: 0.92;
+  background: var(--primary-hover);
 }
 
 .btn-success {
@@ -223,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-success:hover {
-  opacity: 0.92;
+  background: var(--primary-hover);
 }
 
 /* Input Fields */
@@ -268,15 +268,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .badge-warning {
-  background: var(--warning-soft);
-  color: var(--warning);
-  border: 1px solid var(--warning);
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .badge-danger {
-  background: var(--danger-soft);
-  color: var(--danger);
-  border: 1px solid var(--danger);
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .badge-info {

@@ -1,27 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Spotify Obsidian Ash & Neon Green Design System */
-  --bg: #121212;                     /* Iconic Dark Obsidian Slate */
-  --bg-secondary: #181818;           /* Dark Ash Surface */
-  --sidebar: #0A0A0A;                /* Pure Ash Black Sidebar */
+  /* Refined Ash & Slate Grey Palette with Electric Green Accents */
+  --bg: #141619;                     /* Deep Ash Charcoal Canvas */
+  --bg-secondary: #1B1E22;           /* Mid Ash Slate Surface */
+  --sidebar: #0F1113;                /* Dark Ash Obsidian Sidebar */
 
-  --surface: #181818;                /* Dark Ash Charcoal Card */
-  --surface-elevated: #282828;       /* Elevated Slate Ash Surface */
-  --card-hover: #282828;
+  --surface: #1B1E22;                /* Mid Ash Slate Card */
+  --surface-elevated: #25292E;       /* Elevated Ash Slate Card */
+  --card-hover: #25292E;
 
   --primary: #1DB954;                /* Iconic Spotify Electric Green */
   --primary-hover: #1ED760;          /* High-Vibrancy Neon Green */
   --primary-glow: rgba(30, 215, 96, 0.3);
   --primary-soft: rgba(29, 185, 84, 0.15);
 
-  --ai: #1DB954;                     /* Intelligence Accent: Spotify Green */
+  --ai: #1DB954;
   --ai-glow: rgba(30, 215, 96, 0.3);
   --ai-soft: rgba(29, 185, 84, 0.15);
 
-  --secondary-accent: #B3B3B3;       /* Cool Ash Gray */
+  --secondary-accent: #9EA5B0;       /* Cool Ash Gray */
 
-  --success: #1DB954;                /* Spotify Green */
+  --success: #1DB954;
   --success-soft: rgba(29, 185, 84, 0.15);
 
   --warning: #F59E0B;                /* Electric Amber */
@@ -30,20 +30,20 @@
   --danger: #FF3B30;                 /* Crimson Red */
   --danger-soft: rgba(255, 59, 48, 0.15);
 
-  --text-primary: #FFFFFF;           /* Crisp High-Contrast Pure White */
-  --text-secondary: #B3B3B3;         /* Muted Ash Gray */
-  --text-muted: #727272;
+  --text-primary: #F9FAFB;           /* Crisp High-Contrast Pure White */
+  --text-secondary: #9EA5B0;         /* Ash Slate Gray */
+  --text-muted: #6B7280;             /* Cool Grey */
 
-  --border: #282828;                 /* Hairline Ash Charcoal Border */
-  --divider: #282828;
+  --border: #2D3238;                 /* Hairline Ash Gray Border */
+  --divider: #25292E;
 
-  --input-bg: #121212;
-  --hover: #282828;
+  --input-bg: #141619;
+  --hover: #25292E;
 
   --focus: #1DB954;
 
   --btn-primary-bg: #1DB954;
-  --btn-primary-text: #121212;
+  --btn-primary-text: #0F1113;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -73,12 +73,12 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* Spotify Ash Glass Panel */
+/* Ash Slate Glass Panel */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
 }
 
@@ -86,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--surface-elevated);
   border-color: rgba(30, 215, 96, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--primary-soft);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--primary-soft);
 }
 
 .glass-panel-glow {
@@ -208,7 +208,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-success {
   background: var(--success);
-  color: #121212;
+  color: #0F1113;
   border: none;
   padding: 0.65rem 1.35rem;
   border-radius: 2rem;

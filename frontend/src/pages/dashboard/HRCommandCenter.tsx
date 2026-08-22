@@ -166,19 +166,19 @@ export default function HRCommandCenter() {
                           <Calendar size={13} /> {leave.start_date} → {leave.end_date} ({leave.total_days || 5} days)
                         </span>
                         <span>·</span>
-                        <span style={{ color: 'var(--danger)', fontWeight: 600 }}>
+                        <span style={{ color: 'var(--warning)', fontWeight: 600 }}>
                           {leave.team} capacity drops to {leave.simulated_capacity}% if approved
                         </span>
                       </div>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
-                      <span className={`badge ${leave.urgency === 'critical' ? 'badge-danger' : 'badge-warning'}`}>
+                      <span className="badge badge-warning">
                         {leave.urgency}
                       </span>
                       <button
                         className="btn-primary"
-                        style={{ padding: '0.55rem 1rem', fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem 1.2rem', fontSize: '0.85rem' }}
                         onClick={() => navigate(`/simulator`)}
                       >
                         Simulate <ArrowRight size={15} />
@@ -196,8 +196,8 @@ export default function HRCommandCenter() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {teams.map((team: any, i: number) => {
                 const cap = team.capacity_pct || 0;
-                const barColor = cap < 65 ? 'var(--danger)' : cap < 80 ? 'var(--warning)' : 'var(--primary)';
-                const riskBadge = team.risk_level === 'critical' ? 'badge-danger' : team.risk_level === 'high' ? 'badge-warning' : 'badge-success';
+                const barColor = cap < 65 ? 'var(--warning)' : cap < 80 ? 'var(--warning)' : 'var(--primary)';
+                const riskBadge = team.risk_level === 'critical' ? 'badge-warning' : team.risk_level === 'high' ? 'badge-warning' : 'badge-success';
 
                 return (
                   <div key={i}>
@@ -231,20 +231,18 @@ export default function HRCommandCenter() {
           {/* Risk Alerts Card */}
           <div className="glass-panel" style={{ padding: '1.5rem', flex: 1 }}>
             <h2 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <ShieldAlert size={20} color="var(--danger)" /> Top Operational Risks
+              <ShieldAlert size={20} color="var(--warning)" /> Top Operational Risks
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               {alerts.map((a: any, i: number) => {
-                const borderColor = a.severity === 'critical' ? 'var(--danger)' : a.severity === 'high' ? 'var(--secondary-accent)' : 'var(--warning)';
-                const bg = a.severity === 'critical' ? 'var(--danger-soft)' : a.severity === 'high' ? 'rgba(255, 138, 61, 0.12)' : 'var(--warning-soft)';
                 return (
                   <div
                     key={i}
                     style={{
                       padding: '1rem',
                       borderRadius: '0.375rem',
-                      borderLeft: `4px solid ${borderColor}`,
-                      background: bg,
+                      borderLeft: '4px solid var(--warning)',
+                      background: 'var(--warning-soft)',
                       fontSize: '0.875rem',
                       lineHeight: 1.5,
                       fontWeight: 600,
@@ -261,14 +259,14 @@ export default function HRCommandCenter() {
           <div className="glass-panel" style={{ padding: '1.5rem' }}>
             <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', fontWeight: 800 }}>Risk Distribution Matrix</h3>
             <div style={{ display: 'flex', height: '20px', borderRadius: '4px', overflow: 'hidden', width: '100%', gap: '3px' }}>
-              <div style={{ flex: riskDist.critical || 1, background: 'var(--danger)', borderRadius: '2px' }} title={`Critical: ${riskDist.critical}`} />
-              <div style={{ flex: riskDist.high || 1, background: 'var(--secondary-accent)', borderRadius: '2px' }} title={`High: ${riskDist.high}`} />
+              <div style={{ flex: riskDist.critical || 1, background: 'var(--warning)', borderRadius: '2px' }} title={`Critical: ${riskDist.critical}`} />
+              <div style={{ flex: riskDist.high || 1, background: 'var(--warning)', borderRadius: '2px' }} title={`High: ${riskDist.high}`} />
               <div style={{ flex: riskDist.medium || 1, background: 'var(--warning)', borderRadius: '2px' }} title={`Medium: ${riskDist.medium}`} />
               <div style={{ flex: riskDist.low || 2, background: 'var(--primary)', borderRadius: '2px' }} title={`Normal: ${riskDist.low}`} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.85rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
-              <span style={{ color: 'var(--danger)' }}>🔴 {riskDist.critical || 1} Critical</span>
-              <span style={{ color: 'var(--secondary-accent)' }}>🟠 {riskDist.high || 1} High</span>
+              <span style={{ color: 'var(--warning)' }}>🟡 {riskDist.critical || 1} Critical</span>
+              <span style={{ color: 'var(--warning)' }}>🟡 {riskDist.high || 1} High</span>
               <span style={{ color: 'var(--warning)' }}>🟡 {riskDist.medium || 1} Med</span>
               <span style={{ color: 'var(--primary)' }}>🟢 {riskDist.low || 2} Normal</span>
             </div>

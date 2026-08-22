@@ -1,7 +1,6 @@
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Float, Integer, Enum, Date, DateTime, ForeignKey, Text, UniqueConstraint
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 import enum
@@ -22,15 +21,15 @@ class LeaveStatus(str, enum.Enum):
 
 class LeaveRequest(Base):
     __tablename__ = 'leave_requests'
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    employee_id = Column(UUID(as_uuid=True), ForeignKey('employees.id', ondelete='CASCADE'), nullable=False)
-    leave_type = Column(Enum(LeaveType), nullable=False)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    employee_id = Column(String(36), ForeignKey('employees.id', ondelete='CASCADE'), nullable=False)
+    leave_type = Column(String(20), nullable=False)
     start_date = Column(Date, nullable=False)
     end_date = Column(Date, nullable=False)
     total_days = Column(Float, nullable=False)
     reason = Column(Text, nullable=False)
-    status = Column(Enum(LeaveStatus), default=LeaveStatus.pending)
-    approved_by = Column(UUID(as_uuid=True), ForeignKey('employees.id', ondelete='SET NULL'), nullable=True)
+    status = Column(String(20), default='pending')
+    approved_by = Column(String(36), ForeignKey('employees.id', ondelete='SET NULL'), nullable=True)
     approved_at = Column(DateTime, nullable=True)
     rejection_reason = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -41,9 +40,9 @@ class LeaveRequest(Base):
 class LeaveBalance(Base):
     __tablename__ = 'leave_balances'
     __table_args__ = (UniqueConstraint('employee_id', 'leave_type', 'year'),)
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    employee_id = Column(UUID(as_uuid=True), ForeignKey('employees.id', ondelete='CASCADE'), nullable=False)
-    leave_type = Column(Enum(LeaveType), nullable=False)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    employee_id = Column(String(36), ForeignKey('employees.id', ondelete='CASCADE'), nullable=False)
+    leave_type = Column(String(20), nullable=False)
     total_days = Column(Float, default=0)
     used_days = Column(Float, default=0)
     pending_days = Column(Float, default=0)

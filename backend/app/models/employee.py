@@ -1,7 +1,6 @@
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Numeric, Enum, Date, DateTime, ForeignKey
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 import enum
@@ -19,7 +18,7 @@ class EmployeeStatus(str, enum.Enum):
 
 class Employee(Base):
     __tablename__ = 'employees'
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     employee_code = Column(String(20), unique=True, nullable=False)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
@@ -32,7 +31,7 @@ class Employee(Base):
     date_of_birth = Column(Date, nullable=True)
     employment_type = Column(Enum(EmploymentType), default=EmploymentType.full_time)
     status = Column(Enum(EmployeeStatus), default=EmployeeStatus.active)
-    manager_id = Column(UUID(as_uuid=True), ForeignKey('employees.id', ondelete='SET NULL'), nullable=True)
+    manager_id = Column(String(36), ForeignKey('employees.id', ondelete='SET NULL'), nullable=True)
     salary = Column(Numeric(12, 2), default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

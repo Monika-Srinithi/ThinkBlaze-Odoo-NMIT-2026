@@ -2,22 +2,19 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from sqlalchemy.orm import declarative_base
 from app.core.config import settings
 
-# Convert sync postgres URL to async
 def get_async_url(url: str) -> str:
-    if url.startswith("postgresql://"):
-        return url.replace("postgresql://", "postgresql+asyncpg://", 1)
-    if url.startswith("sqlite:///"):
-        return url.replace("sqlite:///", "sqlite+aiosqlite:///", 1)
+    if url.startswith('postgresql://') and '+asyncpg' not in url:
+        return url.replace('postgresql://', 'postgresql+asyncpg://', 1)
+    if url.startswith('sqlite:///') and '+aiosqlite' not in url:
+        return url.replace('sqlite:///', 'sqlite+aiosqlite:///', 1)
     return url
 
 ASYNC_DATABASE_URL = get_async_url(settings.DATABASE_URL)
 
 engine = create_async_engine(
     ASYNC_DATABASE_URL,
-    echo=settings.DEBUG,
-    pool_pre_ping=True,
-    pool_size=10,
-    max_overflow=20,
+    echo=False,
+    connect_args={'check_same_thread': False} if 'sqlite' in ASYNC_DATABASE_URL else {},
 )
 
 AsyncSessionLocal = async_sessionmaker(
@@ -30,7 +27,6 @@ AsyncSessionLocal = async_sessionmaker(
 
 Base = declarative_base()
 
-
 async def get_db():
     async with AsyncSessionLocal() as session:
         try:
@@ -42,9 +38,7 @@ async def get_db():
         finally:
             await session.close()
 
-
 async def init_db():
     async with engine.begin() as conn:
-        # Import all models so they register with Base.metadata
         from app.models import user, employee, attendance, leave, payroll, audit  # noqa
         await conn.run_sync(Base.metadata.create_all)

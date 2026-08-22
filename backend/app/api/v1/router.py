@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1 import auth, employees, attendance, leave, payroll, intelligence, simulator, agents, audit
+from app.api.v1 import auth, employees, attendance, leave, payroll, intelligence, simulator, agents, audit, copilot
 
 api_router = APIRouter()
 
@@ -12,3 +12,4 @@ api_router.include_router(intelligence.router)
 api_router.include_router(simulator.router)
 api_router.include_router(agents.router)
 api_router.include_router(audit.router)
+api_router.include_router(copilot.router)

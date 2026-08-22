@@ -1,6 +1,5 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from typing import Optional
-from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi import HTTPException, status, Depends
@@ -38,7 +37,7 @@ class AuthService:
         if not payload or payload.get('type') != 'refresh':
             raise HTTPException(status_code=401, detail='Invalid refresh token')
         user_id = payload.get('sub')
-        result = await self.db.execute(select(User).where(User.id == UUID(user_id)))
+        result = await self.db.execute(select(User).where(User.id == user_id))
         user = result.scalar_one_or_none()
         if not user or user.refresh_token != refresh_token:
             raise HTTPException(status_code=401, detail='Refresh token revoked')
@@ -60,7 +59,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
     user_id = payload.get('sub')
     if not user_id:
         raise credentials_exception
-    result = await db.execute(select(User).where(User.id == UUID(user_id), User.is_active == True))
+    result = await db.execute(select(User).where(User.id == user_id, User.is_active == True))
     user = result.scalar_one_or_none()
     if not user:
         raise credentials_exception

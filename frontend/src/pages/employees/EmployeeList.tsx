@@ -1,35 +1,276 @@
-import React from 'react';
-import { Table } from '../../components/ui/Table';
-import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { Button } from '../../components/ui/Button';
-import { Plus } from 'lucide-react';
-import type { Employee } from '../../types';
+﻿import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { Users, Search, UserPlus, Building2, MapPin, Mail, ShieldCheck, X } from 'lucide-react';
+import { apiFetch, apiPost } from '../../api/client';
 
-export const EmployeeList: React.FC = () => {
-  const dummyEmployees: Employee[] = [
-    { id: '1', employee_code: 'EMP001', first_name: 'John', last_name: 'Doe', full_name: 'John Doe', email: 'john@example.com', phone: '123456', department: 'Engineering', designation: 'Senior Dev', location: 'NY', date_of_joining: '2020-01-01', employment_type: 'Full Time', status: 'Active', salary: 100000 },
-    { id: '2', employee_code: 'EMP002', first_name: 'Jane', last_name: 'Smith', full_name: 'Jane Smith', email: 'jane@example.com', phone: '654321', department: 'HR', designation: 'Manager', location: 'NY', date_of_joining: '2019-05-15', employment_type: 'Full Time', status: 'Active', salary: 90000 }
-  ];
+export const EmployeeList = () => {
+  const navigate = useNavigate();
+  const qc = useQueryClient();
 
-  const columns = [
-    { header: 'Employee', accessor: (row: Employee) => <div className="font-medium text-white">{row.full_name}<br/><span className="text-xs text-slate-400">{row.email}</span></div> },
-    { header: 'ID', accessor: 'employee_code' as keyof Employee },
-    { header: 'Department', accessor: 'department' as keyof Employee },
-    { header: 'Role', accessor: 'designation' as keyof Employee },
-    { header: 'Status', accessor: (row: Employee) => <Badge variant={row.status === 'Active' ? 'success' : 'default'}>{row.status}</Badge> }
-  ];
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDept, setSelectedDept] = useState('');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // New Employee Form State
+  const [formData, setFormData] = useState({
+    employee_code: `EMP${Math.floor(1000 + Math.random() * 9000)}`,
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '+91 98765 00099',
+    department: 'Team Alpha',
+    designation: 'Software Engineer',
+    location: 'Bangalore',
+    date_of_joining: new Date().toISOString().split('T')[0],
+    employment_type: 'full_time',
+    salary: 85000,
+  });
+
+  // Fetch Employees
+  const { data: empData, isLoading, isError, error } = useQuery({
+    queryKey: ['employees', searchTerm, selectedDept],
+    queryFn: () => apiFetch('/employees', { search: searchTerm, department: selectedDept, limit: 100 }),
+  });
+
+  // Fetch Departments
+  const { data: departments } = useQuery({
+    queryKey: ['departments'],
+    queryFn: () => apiFetch('/employees/departments'),
+  });
+
+  // Create Employee Mutation
+  const createMutation = useMutation({
+    mutationFn: (newEmp: typeof formData) => apiPost('/employees', newEmp),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['employees'] });
+      setIsAddModalOpen(false);
+      setFormData({
+        employee_code: `EMP${Math.floor(1000 + Math.random() * 9000)}`,
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '+91 98765 00099',
+        department: 'Team Alpha',
+        designation: 'Software Engineer',
+        location: 'Bangalore',
+        date_of_joining: new Date().toISOString().split('T')[0],
+        employment_type: 'full_time',
+        salary: 85000,
+      });
+    },
+  });
+
+  const employees = empData?.items || [];
+  const totalEmployees = empData?.total || employees.length;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white">Employees</h1>
-        <Button><Plus className="w-4 h-4 mr-2" /> Add Employee</Button>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Header Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Users color="var(--primary)" size={32} /> Employee Directory
+          </h1>
+          <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+            Manage workforce records, roles, departments, and active statuses.
+          </p>
+        </div>
+        <button className="btn-primary" onClick={() => setIsAddModalOpen(true)}>
+          <UserPlus size={18} /> Add New Employee
+        </button>
       </div>
 
-      <Card>
-        <Table data={dummyEmployees} columns={columns} />
-      </Card>
+      {/* Metrics Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+        {[
+          { label: 'Total Headcount', value: totalEmployees, icon: Users, color: 'var(--primary)' },
+          { label: 'Active Status', value: employees.filter((e: any) => e.status === 'active').length, icon: ShieldCheck, color: 'var(--accent-emerald)' },
+          { label: 'On Leave', value: employees.filter((e: any) => e.status === 'on_leave').length, icon: Building2, color: 'var(--accent-amber)' },
+          { label: 'Teams / Depts', value: (departments || []).length || 5, icon: MapPin, color: 'var(--accent-cyan)' },
+        ].map((m, i) => (
+          <div key={i} className="glass-panel" style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '0.35rem' }}>{m.label}</div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800 }}>{m.value}</div>
+            </div>
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.65rem', borderRadius: '0.6rem', color: m.color }}>
+              <m.icon size={22} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Search & Filter Bar */}
+      <div className="glass-panel" style={{ padding: '1rem 1.25rem', display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ position: 'relative', flex: 1, minWidth: '240px' }}>
+          <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <input
+            className="input-field"
+            style={{ paddingLeft: '2.5rem' }}
+            placeholder="Search by name, email, designation, or code..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <select
+          className="input-field"
+          style={{ width: 'auto', minWidth: '180px', cursor: 'pointer' }}
+          value={selectedDept}
+          onChange={(e) => setSelectedDept(e.target.value)}
+        >
+          <option value="">All Departments</option>
+          {(departments || ['Team Alpha', 'Team Beta', 'Team Gamma', 'Team Delta', 'Team Epsilon']).map((d: string) => (
+            <option key={d} value={d}>{d}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Main Table / Grid */}
+      {isLoading ? (
+        <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+          <div style={{ width: 24, height: 24, border: '3px solid var(--primary)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 1rem' }} />
+          Loading employee records...
+        </div>
+      ) : isError ? (
+        <div className="glass-panel" style={{ padding: '2rem', color: 'var(--accent-rose)', border: '1px solid rgba(244,63,94,0.3)' }}>
+          Failed to load employees: {(error as any)?.message || 'Backend connection error'}
+        </div>
+      ) : employees.length === 0 ? (
+        <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+          No employees found matching filter criteria.
+        </div>
+      ) : (
+        <div className="glass-panel" style={{ overflow: 'hidden' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+            <thead>
+              <tr style={{ background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+                <th style={{ padding: '1rem 1.25rem' }}>Employee</th>
+                <th style={{ padding: '1rem 1.25rem' }}>Code</th>
+                <th style={{ padding: '1rem 1.25rem' }}>Department</th>
+                <th style={{ padding: '1rem 1.25rem' }}>Role / Designation</th>
+                <th style={{ padding: '1rem 1.25rem' }}>Status</th>
+                <th style={{ padding: '1rem 1.25rem' }}>Joining Date</th>
+                <th style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((emp: any) => {
+                const statusClass = emp.status === 'active' ? 'badge-success' : emp.status === 'on_leave' ? 'badge-warning' : 'badge-danger';
+                return (
+                  <tr
+                    key={emp.id}
+                    style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background 0.2s' }}
+                    onMouseOver={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
+                    onMouseOut={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <td style={{ padding: '1rem 1.25rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: 'white' }}>
+                          {emp.first_name?.[0]}{emp.last_name?.[0]}
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{emp.full_name || `${emp.first_name} ${emp.last_name}`}</div>
+                          <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                            <Mail size={12} /> {emp.email}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{ padding: '1rem 1.25rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent-cyan)' }}>
+                      {emp.employee_code}
+                    </td>
+                    <td style={{ padding: '1rem 1.25rem', fontWeight: 600 }}>{emp.department}</td>
+                    <td style={{ padding: '1rem 1.25rem', color: 'var(--text-secondary)' }}>{emp.designation}</td>
+                    <td style={{ padding: '1rem 1.25rem' }}>
+                      <span className={`badge ${statusClass}`}>{emp.status}</span>
+                    </td>
+                    <td style={{ padding: '1rem 1.25rem', color: 'var(--text-muted)' }}>{emp.date_of_joining}</td>
+                    <td style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>
+                      <button
+                        className="btn-secondary"
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}
+                        onClick={() => navigate(`/employees/${emp.id}`)}
+                      >
+                        View Profile
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Add Employee Modal */}
+      {isAddModalOpen && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '1rem' }}>
+          <div className="glass-panel-glow animate-slide-up" style={{ width: '100%', maxWidth: '600px', padding: '2rem', position: 'relative' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <UserPlus color="var(--primary)" size={24} /> Create Employee
+              </h2>
+              <button style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }} onClick={() => setIsAddModalOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); createMutation.mutate(formData); }} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>First Name</label>
+                <input className="input-field" required value={formData.first_name} onChange={(e) => setFormData({ ...formData, first_name: e.target.value })} placeholder="e.g. Ananya" />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Last Name</label>
+                <input className="input-field" required value={formData.last_name} onChange={(e) => setFormData({ ...formData, last_name: e.target.value })} placeholder="e.g. Rao" />
+              </div>
+
+              <div style={{ gridColumn: 'span 2' }}>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Email Address</label>
+                <input className="input-field" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="e.g. ananya.rao@dayflow.com" />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Department</label>
+                <select className="input-field" value={formData.department} onChange={(e) => setFormData({ ...formData, department: e.target.value })}>
+                  <option value="Team Alpha">Team Alpha</option>
+                  <option value="Team Beta">Team Beta</option>
+                  <option value="Team Gamma">Team Gamma</option>
+                  <option value="Team Delta">Team Delta</option>
+                  <option value="Team Epsilon">Team Epsilon</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Designation</label>
+                <input className="input-field" required value={formData.designation} onChange={(e) => setFormData({ ...formData, designation: e.target.value })} placeholder="e.g. Senior SWE" />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Salary (INR)</label>
+                <input className="input-field" type="number" required value={formData.salary} onChange={(e) => setFormData({ ...formData, salary: parseFloat(e.target.value) })} />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.35rem' }}>Joining Date</label>
+                <input className="input-field" type="date" required value={formData.date_of_joining} onChange={(e) => setFormData({ ...formData, date_of_joining: e.target.value })} />
+              </div>
+
+              <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginTop: '1rem' }}>
+                <button type="button" className="btn-secondary" onClick={() => setIsAddModalOpen(false)}>Cancel</button>
+                <button type="submit" className="btn-primary" disabled={createMutation.isPending}>
+                  {createMutation.isPending ? 'Creating...' : 'Save Employee'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+
+export default EmployeeList;
+

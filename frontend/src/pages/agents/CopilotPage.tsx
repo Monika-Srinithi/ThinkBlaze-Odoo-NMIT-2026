@@ -1,163 +1,239 @@
 ﻿import { useState, useRef, useEffect } from 'react';
-import { Bot, Send, User, FileText } from 'lucide-react';
+import { Bot, Send, User, Sparkles, FileText, Zap } from 'lucide-react';
+import { apiPost } from '../../api/client';
 import { useNavigate } from 'react-router-dom';
 
-type Message = {
+interface Message {
   id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  reasoningSteps?: string[];
+  sender: 'user' | 'copilot';
+  text: string;
+  intent?: string;
+  suggestions?: string[];
+  data?: any;
   traceId?: string;
-};
+  timestamp: string;
+}
 
-export default function CopilotPage() {
+export const CopilotPage = () => {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'assistant', content: 'Hello! I am your HR Copilot. How can I assist you with workforce decisions today?' }
-  ]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [expandedTraceId, setExpandedTraceId] = useState<string | null>(null);
 
-  const [suggestions, setSuggestions] = useState([
-    "What should I worry about today?",
-    "Why is Team Beta high risk?",
-    "What if I approve Ravi's leave?",
-    "Which team has lowest availability?"
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'init',
+      sender: 'copilot',
+      text: "Hello! I am your **Dayflow HR Copilot**. I analyze live workforce health, team availability, leave overlap, and operational risk.\n\nHow can I assist you today?",
+      suggestions: [
+        'What should I worry about today?',
+        'Why is Team Beta high risk?',
+        'What if I approve Ravi\'s leave?',
+        'Which team has the lowest availability?',
+      ],
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    },
   ]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, loading]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
 
-  const handleSend = async (text: string) => {
-    if (!text.trim()) return;
-    
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: text };
-    setMessages(prev => [...prev, userMsg]);
+  const handleSend = async (userMsgText: string) => {
+    if (!userMsgText.trim() || isLoading) return;
+
+    const userMsg: Message = {
+      id: String(Date.now()),
+      sender: 'user',
+      text: userMsgText,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
     setInput('');
-    setLoading(true);
+    setIsLoading(true);
 
     try {
-      // Mocked response for demo
-      // const res = await apiClient.post('/copilot/chat', { query: text });
-      
-      setTimeout(() => {
-        const aiMsg: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: 'Based on current data, **Engineering** is at risk because their capacity will drop below 60% if pending leaves are approved. I recommend reviewing Ravi Kumar\'s leave request.',
-          reasoningSteps: [
-            'Fetched workforce health data.',
-            'Identified Engineering capacity at 65%.',
-            'Analyzed pending leaves for Engineering.',
-            'Simulated Ravi Kumar\'s leave impact (-10%).'
-          ],
-          traceId: 'trc_' + Math.random().toString(36).substring(2, 9)
-        };
-        setMessages(prev => [...prev, aiMsg]);
-        setSuggestions(["Simulate Ravi's leave", "Show me Engineering team details", "List all pending actions"]);
-        setLoading(false);
-      }, 1500);
-
-    } catch (e) {
-      setLoading(false);
-      // Handle error
+      const res = await apiPost('/copilot/chat', { message: userMsgText });
+      const copilotMsg: Message = {
+        id: String(Date.now() + 1),
+        sender: 'copilot',
+        text: res.response || 'No response returned.',
+        intent: res.intent,
+        suggestions: res.suggestions || [],
+        data: res.data,
+        traceId: res.trace_id,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, copilotMsg]);
+    } catch (e: any) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: String(Date.now() + 1),
+          sender: 'copilot',
+          text: `⚠️ **Error communicating with Copilot backend**: ${e.message || 'Server connection issue.'}`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const renderFormattedText = (txt: string) => {
+    // Simple bold formatting replacement for markdown
+    const parts = txt.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} style={{ color: 'var(--text-primary)' }}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
   return (
-    <div style={{ height: 'calc(100vh - 4rem)', display: 'flex', flexDirection: 'column', padding: '1.5rem', maxWidth: '1000px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <h1 style={{ margin: 0, fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <Bot color="var(--primary)" size={28} /> HR Copilot
-        </h1>
-        <button onClick={() => navigate('/traces')} style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border)', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <FileText size={16} /> View Decision Traces
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 120px)', gap: '1rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Bot color="var(--primary)" size={28} /> Dayflow HR Copilot
+          </h1>
+          <p style={{ margin: '0.2rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+            Grounded AI Assistant connected directly to your workforce database and intelligence engine.
+          </p>
+        </div>
+        <button className="btn-secondary" onClick={() => navigate('/traces')}>
+          <FileText size={16} /> Decision Traces
         </button>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg-card)', borderRadius: '1rem', border: '1px solid var(--border)', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', scrollBehavior: 'smooth' }}>
-        {messages.map(msg => (
-          <div key={msg.id} style={{ display: 'flex', gap: '1rem', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: msg.role === 'user' ? 'var(--primary)' : 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              {msg.role === 'user' ? <User size={20} /> : <Bot size={20} color="var(--primary)" />}
-            </div>
-            <div style={{ maxWidth: '75%', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-              <div style={{ 
-                background: msg.role === 'user' ? 'var(--primary)' : 'rgba(255,255,255,0.05)', 
-                padding: '1rem', 
-                borderRadius: '1rem', 
-                borderTopRightRadius: msg.role === 'user' ? 0 : '1rem',
-                borderTopLeftRadius: msg.role === 'assistant' ? 0 : '1rem',
-                lineHeight: 1.5,
-                border: msg.role === 'assistant' ? '1px solid var(--border)' : 'none'
-              }}>
-                <div dangerouslySetInnerHTML={{ __html: msg.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
-              </div>
-              
-              {msg.reasoningSteps && (
-                <details style={{ background: 'rgba(0,0,0,0.2)', padding: '0.5rem 1rem', borderRadius: '0.5rem', border: '1px solid var(--border)', fontSize: '0.875rem', width: '100%', cursor: 'pointer' }}>
-                  <summary style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', outline: 'none' }}>
-                    View Reasoning
-                  </summary>
-                  <ul style={{ margin: '0.5rem 0 0 0', paddingLeft: '1.5rem', color: 'var(--text-secondary)' }}>
-                    {msg.reasoningSteps.map((step, i) => <li key={i}>{step}</li>)}
-                  </ul>
-                </details>
-              )}
+      {/* Chat Messages Area */}
+      <div className="glass-panel" style={{ flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        {messages.map((m) => {
+          const isUser = m.sender === 'user';
+          return (
+            <div
+              key={m.id}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: isUser ? 'flex-end' : 'flex-start',
+              }}
+            >
+              <div style={{ display: 'flex', gap: '0.75rem', maxWidth: '85%', flexDirection: isUser ? 'row-reverse' : 'row' }}>
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    background: isUser ? 'var(--accent-cyan)' : 'var(--primary)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    color: 'white',
+                  }}
+                >
+                  {isUser ? <User size={18} /> : <Bot size={18} />}
+                </div>
 
-              {msg.traceId && (
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Trace ID: {msg.traceId}</div>
+                <div
+                  style={{
+                    background: isUser ? 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)' : 'rgba(255,255,255,0.05)',
+                    border: isUser ? 'none' : '1px solid var(--border-subtle)',
+                    padding: '1rem 1.25rem',
+                    borderRadius: '1rem',
+                    borderTopRightRadius: isUser ? '0.2rem' : '1rem',
+                    borderTopLeftRadius: isUser ? '1rem' : '0.2rem',
+                    fontSize: '0.925rem',
+                    lineHeight: 1.6,
+                    whiteSpace: 'pre-wrap',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  {renderFormattedText(m.text)}
+
+                  {/* Trace Footer */}
+                  {m.traceId && (
+                    <div style={{ marginTop: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      <span>Intent: <strong style={{ color: 'var(--accent-cyan)' }}>{m.intent}</strong></span>
+                      <button
+                        onClick={() => setExpandedTraceId(expandedTraceId === m.traceId ? null : m.traceId!)}
+                        style={{ background: 'transparent', border: 'none', color: 'var(--primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
+                      >
+                        <Zap size={12} /> Trace #{m.traceId.slice(0, 8)}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Suggestions */}
+              {m.suggestions && m.suggestions.length > 0 && !isUser && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.75rem', marginLeft: '3rem' }}>
+                  {m.suggestions.map((sugg, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSend(sugg)}
+                      style={{
+                        background: 'rgba(99,102,241,0.1)',
+                        border: '1px solid rgba(99,102,241,0.3)',
+                        color: '#a5b4fc',
+                        padding: '0.4rem 0.85rem',
+                        borderRadius: '2rem',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                        transition: 'all 0.2s',
+                      }}
+                      onMouseOver={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.25)')}
+                      onMouseOut={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.1)')}
+                    >
+                      <Sparkles size={12} /> {sugg}
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
-          </div>
-        ))}
-        {loading && (
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Bot size={20} color="var(--primary)" />
+          );
+        })}
+
+        {isLoading && (
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', color: 'var(--text-secondary)' }}>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Bot size={18} color="white" />
             </div>
-            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '1rem', borderTopLeftRadius: 0, display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-              <div className="typing-dot"></div>
-              <div className="typing-dot" style={{ animationDelay: '0.2s' }}></div>
-              <div className="typing-dot" style={{ animationDelay: '0.4s' }}></div>
+            <div className="glass-panel" style={{ padding: '0.75rem 1.25rem', borderRadius: '1rem', display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem' }}>Copilot is analyzing HR database...</span>
+              <div style={{ width: 16, height: 16, border: '2px solid var(--primary)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      <div style={{ marginTop: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
-          {suggestions.map((sug, i) => (
-            <button key={i} onClick={() => handleSend(sug)} style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border)', padding: '0.5rem 1rem', borderRadius: '2rem', whiteSpace: 'nowrap', cursor: 'pointer', fontSize: '0.875rem', transition: 'all 0.2s' }} onMouseOver={e => e.currentTarget.style.background = 'var(--primary)'} onMouseOut={e => e.currentTarget.style.background = 'var(--bg-card)'}>
-              {sug}
-            </button>
-          ))}
-        </div>
-        <form onSubmit={e => { e.preventDefault(); handleSend(input); }} style={{ display: 'flex', gap: '0.5rem' }}>
-          <input 
-            type="text" 
-            value={input} 
-            onChange={e => setInput(e.target.value)}
-            placeholder="Ask Copilot anything about your workforce..."
-            style={{ flex: 1, background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)', padding: '1rem', borderRadius: '0.75rem', fontSize: '1rem', outline: 'none' }}
-          />
-          <button type="submit" disabled={!input.trim() || loading} style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '0 1.5rem', borderRadius: '0.75rem', cursor: 'pointer', opacity: input.trim() ? 1 : 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Send size={20} />
-          </button>
-        </form>
-      </div>
-      <style dangerouslySetInnerHTML={{__html: `
-        .typing-dot { width: 8px; height: 8px; background: var(--text-secondary); border-radius: 50%; animation: blink 1.4s infinite both; }
-        @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-      `}} />
+      {/* Input Form */}
+      <form onSubmit={(e) => { e.preventDefault(); handleSend(input); }} style={{ display: 'flex', gap: '0.75rem', flexShrink: 0 }}>
+        <input
+          className="input-field"
+          style={{ padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.95rem' }}
+          placeholder="Ask Copilot anything about your workforce, teams, risks, or leaves..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button className="btn-primary" type="submit" style={{ padding: '0.85rem 1.5rem', borderRadius: '0.75rem' }} disabled={isLoading || !input.trim()}>
+          <Send size={18} />
+        </button>
+      </form>
     </div>
   );
-}
+};
+
+export default CopilotPage;
 

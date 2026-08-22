@@ -1,48 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root, [data-theme="dark"], [data-theme="light"] {
-  /* Exact Colors Extracted from Reference Screenshot */
-  --bg: #EBEBEB;                     /* Exact Platinum Light Grey Canvas from Image */
-  --bg-secondary: #F3F3F3;           /* Soft Light Grey Surface */
-  --sidebar: #080808;                /* Exact Pitch Black from Image Bottom */
+  /* Awwwards.com Premium Editorial Design System (Studio Paper & Architectural Charcoal) */
+  --bg: #F4F4F0;                     /* Awwwards Warm Studio Paper Canvas */
+  --bg-secondary: #EBEBE6;           /* Awwwards Subtle Darker Paper */
+  --sidebar: #FFFFFF;                /* Pristine White Sidebar with Grid Borders */
 
-  --surface: #FFFFFF;                /* Pristine White Card Surface */
-  --surface-elevated: #F7F7F7;       /* Elevated Card Surface */
-  --card-hover: #F2F2F2;
+  --surface: #FFFFFF;                /* Pure White Cards */
+  --surface-elevated: #F9F9F6;       /* Slightly Off-White Elevated Cards */
+  --card-hover: #F0F0EB;
 
-  --primary: #1E1E1E;                /* Exact Bold Charcoal Black from Image Text */
-  --primary-hover: #333333;
-  --primary-glow: rgba(30, 30, 30, 0.15);
-  --primary-soft: rgba(30, 30, 30, 0.08);
+  --primary: #111111;                /* Deep Architectural Graphite */
+  --primary-hover: #000000;
+  --primary-glow: rgba(17, 17, 17, 0.1);
+  --primary-soft: rgba(17, 17, 17, 0.05);
 
-  --ai: #1E1E1E;
-  --ai-glow: rgba(30, 30, 30, 0.15);
-  --ai-soft: rgba(30, 30, 30, 0.08);
+  --ai: #111111;
+  --ai-glow: rgba(17, 17, 17, 0.1);
+  --ai-soft: rgba(17, 17, 17, 0.05);
 
-  --secondary-accent: #555555;       /* Muted Editorial Gray */
+  --secondary-accent: #666660;       /* Warm Charcoal Muted Slate */
 
-  --success: #1E1E1E;                /* Charcoal Black */
-  --success-soft: rgba(30, 30, 30, 0.08);
+  /* Semantic Alerts strictly styled to fit the Awwwards Monochrome look */
+  --success: #111111;                /* Solid black for healthy/success badge */
+  --success-soft: #F0F0EB;
 
-  --warning: #1E1E1E;                /* Charcoal Black */
-  --warning-soft: rgba(30, 30, 30, 0.08);
+  --warning: #C27803;                /* Refined Dark Ochre Gold (Awwwards Gold rating) */
+  --warning-soft: #FDF6E2;
 
-  --danger: #1E1E1E;                 /* Charcoal Black */
-  --danger-soft: rgba(30, 30, 30, 0.08);
+  --danger: #9B1C1C;                 /* Refined Terracotta/Burgundy Crimson */
+  --danger-soft: #FDE8E8;
 
-  --text-primary: #1E1E1E;           /* Exact Deep Charcoal Text from Image */
-  --text-secondary: #555555;         /* Muted Slate Text */
-  --text-muted: #888888;
+  --text-primary: #111111;           /* Deep Architectural Charcoal Text */
+  --text-secondary: #666660;         /* Muted Slate Text */
+  --text-muted: #999990;
 
-  --border: #D5D5D5;                 /* Hairline Divider */
-  --divider: #E0E0E0;
+  --border: #E0E0DB;                 /* 1px Precision Grid Lines */
+  --divider: #ECECE6;
 
   --input-bg: #FFFFFF;
-  --hover: #F0F0F0;
+  --hover: #ECECE6;
 
-  --focus: #1E1E1E;
+  --focus: #111111;
 
-  --btn-primary-bg: #1E1E1E;
+  --btn-primary-bg: #111111;
   --btn-primary-text: #FFFFFF;
   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -70,30 +71,28 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   letter-spacing: -0.04em;
   font-weight: 900;
+  text-transform: uppercase;
   color: var(--text-primary);
 }
 
-/* Image-Matched Glass Panel */
+/* Awwwards Grid Cards */
 .glass-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.4rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease;
+  border-radius: 0;                  /* Sharp architectural edges */
+  box-shadow: none;                  /* Zero shadows - flat structural grid */
+  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
 .glass-panel:hover {
   background: var(--card-hover);
-  border-color: #1E1E1E;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
 }
 
 .glass-panel-glow {
   background: var(--surface);
-  border: 1px solid var(--primary);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 0.4rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 0;
 }
 
 /* Accent Text */
@@ -115,13 +114,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
 
-/* Keyframe Animations */
+/* Animations */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -140,41 +138,41 @@ h1, h2, h3, h4, h5, h6 {
   animation: livePulse 2s ease-in-out infinite;
 }
 
-/* Primary CTA Button */
+/* Awwwards Primary CTA Button (Bold Pill/Sharp Rectangle) */
 .btn-primary {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
-  border: none;
-  padding: 0.65rem 1.35rem;
-  border-radius: 0.25rem;
+  border: 1.5px solid var(--primary);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0;                  /* Sharp edges */
   font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
+  font-size: 0.825rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 .btn-primary:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  background: #FFFFFF;
+  color: var(--primary);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background: #FFFFFF;
+  background: transparent;
   color: var(--text-primary);
-  border: 1px solid var(--border);
-  padding: 0.65rem 1.35rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
+  border: 1.5px solid var(--border);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0;
+  font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
+  font-size: 0.825rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -183,19 +181,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn-secondary:hover {
   border-color: var(--primary);
-  background: #F4F4F4;
+  background: var(--surface-elevated);
 }
 
 .btn-danger {
-  background: #1E1E1E;
+  background: var(--danger);
   color: #FFFFFF;
-  border: none;
-  padding: 0.65rem 1.35rem;
-  border-radius: 0.25rem;
-  font-weight: 700;
+  border: 1.5px solid var(--danger);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0;
+  font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
+  font-size: 0.825rem;
+  text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -203,19 +201,20 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-danger:hover {
-  opacity: 0.9;
+  background: transparent;
+  color: var(--danger);
 }
 
 .btn-success {
-  background: #1E1E1E;
+  background: var(--success);
   color: #FFFFFF;
-  border: none;
-  padding: 0.65rem 1.35rem;
-  border-radius: 0.25rem;
+  border: 1.5px solid var(--success);
+  padding: 0.7rem 1.4rem;
+  border-radius: 0;
   font-weight: 800;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  letter-spacing: -0.01em;
+  font-size: 0.825rem;
+  text-transform: uppercase;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -223,7 +222,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 .btn-success:hover {
-  opacity: 0.9;
+  background: transparent;
+  color: var(--success);
 }
 
 /* Input Fields */
@@ -232,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border);
   color: var(--text-primary);
   padding: 0.65rem 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0;
   font-size: 0.875rem;
   font-family: var(--font-sans);
   outline: none;
@@ -240,8 +240,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 .input-field:focus {
-  border-color: #1E1E1E;
-  box-shadow: 0 0 0 2px rgba(30, 30, 30, 0.1);
+  border-color: var(--primary);
 }
 .input-field::placeholder {
   color: var(--text-muted);
@@ -253,40 +252,41 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.65rem;
-  border-radius: 0.2rem;
-  font-size: 0.725rem;
+  border-radius: 0;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   font-family: var(--font-heading);
+  border: 1px solid var(--border);
 }
 
 .badge-success {
-  background: #EBEBEB;
-  color: #1E1E1E;
-  border: 1px solid #1E1E1E;
+  background: var(--success-soft);
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .badge-warning {
-  background: #EBEBEB;
-  color: #1E1E1E;
-  border: 1px solid #1E1E1E;
+  background: var(--warning-soft);
+  color: var(--warning);
+  border: 1px solid var(--warning);
 }
 
 .badge-danger {
-  background: #1E1E1E;
-  color: #FFFFFF;
-  border: 1px solid #1E1E1E;
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid var(--danger);
 }
 
 .badge-info {
-  background: #EBEBEB;
-  color: #1E1E1E;
-  border: 1px solid #D5D5D5;
+  background: var(--surface-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
 .badge-ai {
-  background: #1E1E1E;
+  background: var(--primary);
   color: #FFFFFF;
-  border: 1px solid #1E1E1E;
+  border: 1px solid var(--primary);
 }
